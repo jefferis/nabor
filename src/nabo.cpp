@@ -36,8 +36,8 @@ List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> 
   MatrixXd dists2;
   indices.resize(k, q.cols());
   dists2.resize(k, q.cols());
-  
-  nns->knn(q, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
+
+  nns->knn(q, indices, dists2, k, eps, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
   
   // 1-index for R
   indices = (indices.array()+1).matrix();
