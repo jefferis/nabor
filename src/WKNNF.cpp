@@ -38,6 +38,10 @@ class WKNNF {
 
     MatrixXf queryf = query.cast<float>();
     queryf.transposeInPlace();
+    return queryF(queryf, k, eps);
+  }
+  
+  List queryF(const Eigen::MatrixXf& queryf, const int k, const double eps=0.0) {
 
     MatrixXi indices(k, queryf.cols());
     MatrixXf dists2(k, queryf.cols());
