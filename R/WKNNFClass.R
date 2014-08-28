@@ -1,0 +1,1 @@
+WKNNF <- setRcppClass("WKNNF")
