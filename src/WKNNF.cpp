@@ -42,6 +42,8 @@ class WKNNF {
     MatrixXi indices(k, queryf.cols());
     MatrixXf dists2(k, queryf.cols());
     
+    // build tree if required
+    build_tree();
     tree->knn(queryf, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
     
     // 1-index for R
