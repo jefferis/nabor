@@ -7,14 +7,14 @@
 using namespace Rcpp;
 
 // knn1
-List knn1(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::VectorXd> q, const int k);
+List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k);
 RcppExport SEXP nabo_knn1(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type q(qSEXP );
         Rcpp::traits::input_parameter< const int >::type k(kSEXP );
         List __result = knn1(M, q, k);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
@@ -24,14 +24,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // knn
-List knn(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps = 0.0);
+List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps = 0.0);
 RcppExport SEXP nabo_knn(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type q(qSEXP );
         Rcpp::traits::input_parameter< const int >::type k(kSEXP );
         Rcpp::traits::input_parameter< const double >::type eps(epsSEXP );
         List __result = knn(M, q, k, eps);

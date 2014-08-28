@@ -9,7 +9,7 @@ using namespace Eigen;
 
 //' @export
 // [[Rcpp::export]]
-List knn1(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::VectorXd> q, const int k) {
+List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k) {
   
   // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
   NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
@@ -27,7 +27,7 @@ List knn1(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::VectorXd> q, const in
 
 //' @export
 // [[Rcpp::export]]
-List knn(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
+List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
   
   // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
   NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
