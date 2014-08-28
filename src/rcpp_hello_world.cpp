@@ -24,3 +24,24 @@ List knn1(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::VectorXd> q, const in
   return Rcpp::List::create(Rcpp::Named("indices")=indices,
                             Rcpp::Named("dists2")=dists2);
 }
+
+//' @export
+// [[Rcpp::export]]
+List knn(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
+  
+  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
+  NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
+  
+  MatrixXi indices;
+  MatrixXd dists2;
+  indices.resize(k, q.cols());
+  dists2.resize(k, q.cols());
+  
+  nns->knn(q, indices, dists2, k, eps, NNSearchF::ALLOW_SELF_MATCH);
+  
+  // cleanup kd-tree
+  delete nns;
+  
+  return Rcpp::List::create(Rcpp::Named("indices")=indices,
+                            Rcpp::Named("dists2")=dists2);
+}

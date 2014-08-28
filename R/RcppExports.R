@@ -6,3 +6,8 @@ knn1 <- function(M, q, k) {
     .Call('nabo_knn1', PACKAGE = 'nabo', M, q, k)
 }
 
+#' @export
+knn <- function(M, q, k, eps = 0.0) {
+    .Call('nabo_knn', PACKAGE = 'nabo', M, q, k, eps)
+}
+
