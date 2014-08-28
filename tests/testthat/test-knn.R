@@ -1,9 +1,31 @@
 context("knn")
-if(require("RANN")){
+
+test_that('knn gives appropriate result structure',{
+  d=matrix(rnorm(100*3), nrow=3)
+  expect_is(r<-knn(d, d, k=5), 'list')
+  expect_is(r$indices, 'matrix')
+  expect_equal(dim(r$dists), c(5,100))
+  expect_is(r$dists, 'matrix')
+})
+
+test_that('knn and knn1 agree',{
+  set.seed(42)
+  d=matrix(rnorm(100*3), nrow=3)
+  q=matrix(rnorm(100*3), nrow=3)
+  bl=apply(q,2,function(x) knn1(d, x, k=5))
+  bl2=list(indices=do.call(cbind,lapply(bl,"[[","indices")),
+           dists=do.call(cbind,lapply(bl,"[[","dists")))
+  expect_equal(knn(d, q, k=5), bl2)
+  
+})
+
+library(RANN)
 test_that('knn and RANN:nn2 agree',{
   set.seed(42)
-  d=matrix(rnorm(10000*3), nrow=3)
-  q=matrix(rnorm(10000*3), nrow=3)
-  expect_equivalent(knn(d, q, k=1), lapply(nn2(t(d), t(q), k=1), t))
+  d=matrix(rnorm(100*3), nrow=3)
+  q=matrix(rnorm(100*3), nrow=3)
+  expect_is(r1<-knn(d, q, k=5), 'list')
+  expect_is(r2<-nn2(t(d), t(q), k=5), 'list')
+  expect_equal(r1$indices, t(r2$nn.idx))
+  expect_equal(r1$dists, t(r2$nn.dists))
 })
-}
