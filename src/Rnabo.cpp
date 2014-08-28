@@ -2,6 +2,7 @@
 #include <RcppEigen.h>
 #include <nabo/nabo.h>
 
+// [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::depends(RcppEigen)]]
 using namespace Rcpp;
 using namespace Nabo;
