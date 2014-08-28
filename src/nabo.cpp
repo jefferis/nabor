@@ -1,96 +1,164 @@
-#include <Rcpp.h>
-#include <RcppEigen.h>
-#include <nabo/nabo.h>
+/*
 
-// [[Rcpp::depends(RcppEigen)]]
-using namespace Rcpp;
-using namespace Nabo;
-using namespace Eigen;
+Copyright (c) 2010--2011, Stephane Magnenat, ASL, ETHZ, Switzerland
+You can contact the author at <stephane at magnenat dot net>
 
-//' Find K nearest neighbours for a single query point
-//' 
-//' @details note that libnabo returns squared distances by default, but we 
-//'   unsquare them.
-//' @param M dxM matrix of M target points with dimension d
-//' @param q a length d vector defining a query point
-//' @param k an integer number of nearest neighbours to find
-//' @param eps An approximate error bound. The default of 0 implies exact
-//'   matching.
-//' @return A list with elements \code{indices} (1-indexed indices) and 
-//'   \code{dists} (distances)
-//' @export
-// [[Rcpp::export]]
-List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k, const double eps=0.0) {
-  
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
-  
-  VectorXi indices(k);
-  VectorXd dists2(k);
-  nns->knn(q, indices, dists2, k, eps, NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
+All rights reserved.
 
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
-}
-//' Find K nearest neighbours for multiple query points
-//' @param q dxN matrix of N query points with dimension d (nb \code{M} and 
-//'   \code{q} must have same dimension)
-//' @inheritParams knn1
-//' @return A list with elements \code{indices} (1-indexed indices) and 
-//'   \code{dists} (distances), both of which are k x N matrices
-//' @export
-// [[Rcpp::export]]
-List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
-  
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
-  
-  MatrixXi indices;
-  MatrixXd dists2;
-  indices.resize(k, q.cols());
-  dists2.resize(k, q.cols());
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the <organization> nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
 
-  nns->knn(q, indices, dists2, k, eps, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
-}
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL ETH-ASL BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-// [[Rcpp::export]]
-List knn_brute(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k) {
-  
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createBruteForce(M);
-  
-  MatrixXi indices;
-  MatrixXd dists2;
-  indices.resize(k, q.cols());
-  dists2.resize(k, q.cols());
+*/
 
-  nns->knn(q, indices, dists2, k, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
+#include "nabo.h"
+#include "nabo_private.h"
+#include "index_heap.h"
+#include <limits>
+#include <algorithm>
+#include <stdexcept>
+#include <boost/format.hpp>
+
+/*!	\file nabo.cpp
+	\brief implementation of public interface
+	\ingroup private
+*/
+
+namespace Nabo
+{
+	using namespace std;
+	
+	template<typename T>
+	NearestNeighbourSearch<T>::NearestNeighbourSearch(const Matrix& cloud, const Index dim, const unsigned creationOptionFlags):
+		cloud(cloud),
+		dim(min(dim, int(cloud.rows()))),
+		creationOptionFlags(creationOptionFlags),
+		minBound(Vector::Constant(this->dim, numeric_limits<T>::max())),
+		maxBound(Vector::Constant(this->dim, numeric_limits<T>::min()))
+	{
+		if (cloud.cols() == 0)
+			throw runtime_error("Cloud has no points");
+		if (cloud.rows() == 0)
+			throw runtime_error("Cloud has 0 dimensions");
+	}
+	
+	template<typename T>
+	unsigned long NearestNeighbourSearch<T>::knn(const Vector& query, IndexVector& indices, Vector& dists2, const Index k, const T epsilon, const unsigned optionFlags, const T maxRadius) const
+	{
+#ifdef EIGEN3_API
+		const Eigen::Map<const Matrix> queryMatrix(&query.coeff(0,0), dim, 1);
+#else // EIGEN3_API
+		const Eigen::Map<Matrix> queryMatrix(&query.coeff(0,0), dim, 1);
+#endif // EIGEN3_API
+		// note: this is inefficient, because we copy memory, due to the template-
+		// based abstraction of Eigen. High-performance implementation should
+		// take care of knnM and then implement knn on top of it.
+		// C++0x should solve this with rvalue
+		IndexMatrix indexMatrix(k, 1);
+		Matrix dists2Matrix(k, 1);
+		const unsigned long stats = knn(queryMatrix, indexMatrix, dists2Matrix, k, epsilon, optionFlags, maxRadius);
+		indices = indexMatrix.col(0);
+		dists2 = dists2Matrix.col(0);
+		return stats;
+	}
+	
+	template<typename T>
+	void NearestNeighbourSearch<T>::checkSizesKnn(const Matrix& query, const IndexMatrix& indices, const Matrix& dists2, const Index k, const unsigned optionFlags, const Vector* maxRadii) const
+	{
+		const bool allowSelfMatch(optionFlags & NearestNeighbourSearch<T>::ALLOW_SELF_MATCH);
+		if (allowSelfMatch)
+		{
+			if (k > cloud.cols())
+				throw runtime_error((boost::format("Requesting more points (%1%) than available in cloud (%2%)") % k % cloud.cols()).str());
+		}
+		else
+		{
+			if (k > cloud.cols()-1)
+				throw runtime_error((boost::format("Requesting more points (%1%) than available in cloud minus 1 (%2%) (as self match is forbidden)") % k % (cloud.cols()-1)).str());
+		}
+		if (query.rows() < dim)
+			throw runtime_error((boost::format("Query has less dimensions (%1%) than requested for cloud (%2%)") % query.rows() % dim).str());
+		if (indices.rows() != k)
+			throw runtime_error((boost::format("Index matrix has a different number of rows (%1%) than k (%2%)") % indices.rows() % k).str());
+		if (indices.cols() != query.cols())
+			throw runtime_error((boost::format("Index matrix has a different number of columns (%1%) than query (%2%)") % indices.rows() % query.cols()).str());
+		if (dists2.rows() != k)
+			throw runtime_error((boost::format("Distance matrix has a different number of rows (%1%) than k (%2%)") % dists2.rows() % k).str());
+		if (dists2.cols() != query.cols())
+			throw runtime_error((boost::format("Distance matrix has a different number of columns (%1%) than query (%2%)") % dists2.rows() % query.cols()).str());
+		if (maxRadii && (maxRadii->size() != query.cols()))
+			throw runtime_error((boost::format("Maximum radii vector has not the same length (%1%) than query has columns (%2%)") % maxRadii->size() % k).str());
+		const unsigned maxOptionFlagsValue(ALLOW_SELF_MATCH|SORT_RESULTS);
+		if (optionFlags > maxOptionFlagsValue)
+			throw runtime_error((boost::format("OR-ed value of option flags (%1%) is larger than maximal valid value (%2%)") % optionFlags % maxOptionFlagsValue).str());
+	}
+	
+	
+	template<typename T>
+	NearestNeighbourSearch<T>* NearestNeighbourSearch<T>::create(const Matrix& cloud, const Index dim, const SearchType preferedType, const unsigned creationOptionFlags, const Parameters& additionalParameters)
+	{
+		if (dim <= 0)
+			throw runtime_error("Your space must have at least one dimension");
+		switch (preferedType)
+		{
+			case BRUTE_FORCE: return new BruteForceSearch<T>(cloud, dim, creationOptionFlags);
+			case KDTREE_LINEAR_HEAP: return new KDTreeUnbalancedPtInLeavesImplicitBoundsStackOpt<T, IndexHeapBruteForceVector<int,T> >(cloud, dim, creationOptionFlags, additionalParameters);
+			case KDTREE_TREE_HEAP: return new KDTreeUnbalancedPtInLeavesImplicitBoundsStackOpt<T, IndexHeapSTL<int,T> >(cloud, dim, creationOptionFlags, additionalParameters);
+			#ifdef HAVE_OPENCL
+			case KDTREE_CL_PT_IN_NODES: return new KDTreeBalancedPtInNodesStackOpenCL<T>(cloud, dim, creationOptionFlags, CL_DEVICE_TYPE_GPU);
+			case KDTREE_CL_PT_IN_LEAVES: return new KDTreeBalancedPtInLeavesStackOpenCL<T>(cloud, dim, creationOptionFlags, CL_DEVICE_TYPE_GPU);
+			case BRUTE_FORCE_CL: return new BruteForceSearchOpenCL<T>(cloud, dim, creationOptionFlags, CL_DEVICE_TYPE_GPU);
+			#else // HAVE_OPENCL
+			case KDTREE_CL_PT_IN_NODES: throw runtime_error("OpenCL not found during compilation");
+			case KDTREE_CL_PT_IN_LEAVES: throw runtime_error("OpenCL not found during compilation");
+			case BRUTE_FORCE_CL: throw runtime_error("OpenCL not found during compilation");
+			#endif // HAVE_OPENCL
+			default: throw runtime_error("Unknown search type");
+		}
+	}
+	
+	template<typename T>
+	NearestNeighbourSearch<T>* NearestNeighbourSearch<T>::createBruteForce(const Matrix& cloud, const Index dim, const unsigned creationOptionFlags)
+	{
+		if (dim <= 0)
+			throw runtime_error("Your space must have at least one dimension");
+		return new BruteForceSearch<T>(cloud, dim, creationOptionFlags);
+	}
+	
+	template<typename T>
+	NearestNeighbourSearch<T>* NearestNeighbourSearch<T>::createKDTreeLinearHeap(const Matrix& cloud, const Index dim, const unsigned creationOptionFlags, const Parameters& additionalParameters)
+	{
+		if (dim <= 0)
+			throw runtime_error("Your space must have at least one dimension");
+		return new KDTreeUnbalancedPtInLeavesImplicitBoundsStackOpt<T, IndexHeapBruteForceVector<int,T> >(cloud, dim, creationOptionFlags, additionalParameters);
+	}
+	
+	template<typename T>
+	NearestNeighbourSearch<T>* NearestNeighbourSearch<T>::createKDTreeTreeHeap(const Matrix& cloud, const Index dim, const unsigned creationOptionFlags, const Parameters& additionalParameters)
+	{
+		if (dim <= 0)
+			throw runtime_error("Your space must have at least one dimension");
+		return new KDTreeUnbalancedPtInLeavesImplicitBoundsStackOpt<T, IndexHeapSTL<int,T> >(cloud, dim, creationOptionFlags, additionalParameters);
+	}
+	
+	template struct NearestNeighbourSearch<float>;
+	template struct NearestNeighbourSearch<double>;
 }
