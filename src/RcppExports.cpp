@@ -42,3 +42,20 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// knn_brute
+List knn_brute(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k);
+RcppExport SEXP nabo_knn_brute(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const int >::type k(kSEXP );
+        List __result = knn_brute(M, q, k);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}

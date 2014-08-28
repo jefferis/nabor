@@ -28,3 +28,7 @@ knn <- function(M, q, k, eps = 0.0) {
     .Call('nabo_knn', PACKAGE = 'nabo', M, q, k, eps)
 }
 
+knn_brute <- function(M, q, k) {
+    .Call('nabo_knn_brute', PACKAGE = 'nabo', M, q, k)
+}
+

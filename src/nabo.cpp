@@ -70,3 +70,27 @@ List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> 
   return Rcpp::List::create(Rcpp::Named("indices")=indices,
                             Rcpp::Named("dists")=dists2);
 }
+
+// [[Rcpp::export]]
+List knn_brute(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k) {
+  
+  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
+  NNSearchD* nns = NNSearchD::createBruteForce(M);
+  
+  MatrixXi indices;
+  MatrixXd dists2;
+  indices.resize(k, q.cols());
+  dists2.resize(k, q.cols());
+
+  nns->knn(q, indices, dists2, k, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
+  
+  // 1-index for R
+  indices = (indices.array()+1).matrix();
+  // unsquare distances
+  dists2 = (dists2.array().sqrt()).matrix();
+  // cleanup kd-tree
+  delete nns;
+  
+  return Rcpp::List::create(Rcpp::Named("indices")=indices,
+                            Rcpp::Named("dists")=dists2);
+}
