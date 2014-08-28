@@ -46,15 +46,16 @@ class WKNNF {
     build_tree();
     tree->knn(queryf, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
     
-    // 1-index for R
-    indices = (indices.array()+1).matrix();
+    // transpose and 1-index for R
     indices.transposeInPlace();
-    // unsquare distances
-    MatrixXd dists = (dists2.array().sqrt()).matrix().cast<double>();
-    dists.transposeInPlace();
+    indices.array()+=1;
+    
+    // transpose and unsquare distances for R
+    dists2.transposeInPlace();
+    MatrixXd dists = dists2.cwiseSqrt().cast<double>();
     
     return Rcpp::List::create(Rcpp::Named("indices")=indices,
-    Rcpp::Named("dists")=dists);
+      Rcpp::Named("dists")=dists);
   }
   
   private:
