@@ -3,5 +3,5 @@
 #' @name nabo-package
 #' @aliases nabo
 #' @useDynLib nabo
-#' @import Rcpp RcppEigen
+#' @import Rcpp RcppEigen methods
 NULL
