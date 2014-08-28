@@ -27,7 +27,7 @@ List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd>
   delete nns;
   
   return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists2")=dists2);
+                            Rcpp::Named("dists")=dists2);
 }
 
 //' @export
@@ -52,5 +52,5 @@ List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> 
   delete nns;
   
   return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists2")=dists2);
+                            Rcpp::Named("dists")=dists2);
 }
