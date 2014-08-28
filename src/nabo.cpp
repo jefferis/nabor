@@ -9,14 +9,14 @@ using namespace Eigen;
 
 //' @export
 // [[Rcpp::export]]
-List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k) {
+List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k, const double eps=0.0) {
   
   // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
   NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
   
   VectorXi indices(k);
   VectorXd dists2(k);
-  nns->knn(q, indices, dists2, k);
+  nns->knn(q, indices, dists2, k, eps);
   
   // 1-index for R
   indices = (indices.array()+1).matrix();

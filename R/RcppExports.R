@@ -2,8 +2,8 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' @export
-knn1 <- function(M, q, k) {
-    .Call('nabo_knn1', PACKAGE = 'nabo', M, q, k)
+knn1 <- function(M, q, k, eps = 0.0) {
+    .Call('nabo_knn1', PACKAGE = 'nabo', M, q, k, eps)
 }
 
 #' @export

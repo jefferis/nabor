@@ -7,8 +7,8 @@
 using namespace Rcpp;
 
 // knn1
-List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k);
-RcppExport SEXP nabo_knn1(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP) {
+List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k, const double eps = 0.0);
+RcppExport SEXP nabo_knn1(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
@@ -16,7 +16,8 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
         Rcpp::traits::input_parameter< const Eigen::Map<Eigen::VectorXd> >::type q(qSEXP );
         Rcpp::traits::input_parameter< const int >::type k(kSEXP );
-        List __result = knn1(M, q, k);
+        Rcpp::traits::input_parameter< const double >::type eps(epsSEXP );
+        List __result = knn1(M, q, k, eps);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
