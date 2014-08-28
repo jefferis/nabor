@@ -1,0 +1,2 @@
+PKG_CPPFLAGS=-I. -Inabo
+PKG_LIBS= -lnabo

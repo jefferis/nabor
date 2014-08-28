@@ -7,16 +7,13 @@
 using namespace Rcpp;
 
 // rcpp_hello_world
-List rcpp_hello_world();
+void rcpp_hello_world();
 RcppExport SEXP nabo_rcpp_hello_world() {
 BEGIN_RCPP
-    SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        List __result = rcpp_hello_world();
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
+        rcpp_hello_world();
     }
-    UNPROTECT(1);
-    return __sexp_result;
+    return R_NilValue;
 END_RCPP
 }
