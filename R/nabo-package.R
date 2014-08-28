@@ -4,5 +4,5 @@
 #' @aliases nabo
 #' @seealso \code{\link{nn2}}
 #' @useDynLib nabo
-#' @import Rcpp
+#' @import Rcpp RcppEigen
 NULL
