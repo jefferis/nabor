@@ -41,6 +41,11 @@ class WKNNF {
     return queryF(queryf, k, eps);
   }
   
+  List queryWKNNF(const WKNNF& query, const int k, const double eps=0.0) {
+    
+    return queryF(query.data_pts, k, eps);
+  }
+  
   List queryF(const Eigen::MatrixXf& queryf, const int k, const double eps=0.0) {
 
     MatrixXi indices(k, queryf.cols());
@@ -72,5 +77,6 @@ RCPP_MODULE(class_WKNNF) {
   .constructor<Eigen::Map<Eigen::MatrixXd> >()
   .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
   .method( "query", &WKNNF::query )
+  .method( "queryWKNNF", &WKNNF::queryWKNNF )
   ;
 }
