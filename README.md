@@ -1,4 +1,5 @@
 # nabo
+[![Build Status](https://travis-ci.org/jefferis/nabo.svg)](https://travis-ci.org/jefferis/nabo) 
 
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/).
