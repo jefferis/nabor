@@ -27,7 +27,7 @@ List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd>
   
   VectorXi indices(k);
   VectorXd dists2(k);
-  nns->knn(q, indices, dists2, k, eps);
+  nns->knn(q, indices, dists2, k, eps, NNSearchD::ALLOW_SELF_MATCH);
   
   // 1-index for R
   indices = (indices.array()+1).matrix();
