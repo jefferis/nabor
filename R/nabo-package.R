@@ -2,7 +2,6 @@
 #'
 #' @name nabo-package
 #' @aliases nabo
-#' @seealso \code{\link{nn2}}
 #' @useDynLib nabo
 #' @import Rcpp RcppEigen
 NULL

@@ -6,7 +6,4 @@
 \description{
 Wrapper libnabo Nearest Neighbours C++ library
 }
-\seealso{
-\code{\link{nn2}}
-}
 

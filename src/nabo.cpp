@@ -7,6 +7,17 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
+//' Find K nearest neighbours for a single query point
+//' 
+//' @details note that libnabo returns squared distances by default, but we 
+//'   unsquare them.
+//' @param M dxM matrix of M target points with dimension d
+//' @param q a length d vector defining a query point
+//' @param k an integer number of nearest neighbours to find
+//' @param eps An approximate error bound. The default of 0 implies exact
+//'   matching.
+//' @return A list with elements \code{indices} (1-indexed indices) and 
+//'   \code{dists} (distances)
 //' @export
 // [[Rcpp::export]]
 List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k, const double eps=0.0) {
@@ -29,7 +40,12 @@ List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd>
   return Rcpp::List::create(Rcpp::Named("indices")=indices,
                             Rcpp::Named("dists")=dists2);
 }
-
+//' Find K nearest neighbours for multiple query points
+//' @param q dxN matrix of N query points with dimension d (nb \code{M} and 
+//'   \code{q} must have same dimension)
+//' @inheritParams knn1
+//' @return A list with elements \code{indices} (1-indexed indices) and 
+//'   \code{dists} (distances), both of which are k x N matrices
 //' @export
 // [[Rcpp::export]]
 List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
