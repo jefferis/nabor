@@ -18,6 +18,11 @@ List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd>
   VectorXd dists2(k);
   nns->knn(q, indices, dists2, k);
   
+  // 1-index for R
+  indices = (indices.array()+1).matrix();
+  // unsquare distances
+  dists2 = (dists2.array().sqrt()).matrix();
+
   // cleanup kd-tree
   delete nns;
   
