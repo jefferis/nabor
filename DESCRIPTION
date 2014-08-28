@@ -10,7 +10,7 @@ License: What Licence is it under ?
 Imports:
     Rcpp (>= 0.11.2),
     RcppEigen
-LinkingTo: Rcpp, RcppEigen
+LinkingTo: Rcpp, RcppEigen, BH
 Suggests:
     testthat,
     RANN
