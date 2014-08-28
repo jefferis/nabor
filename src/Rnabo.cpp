@@ -1,6 +1,6 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
-#include <nabo/nabo.h>
+#include "nabo.h"
 
 // [[Rcpp::plugins(cpp11)]]
 // [[Rcpp::depends(RcppEigen)]]
