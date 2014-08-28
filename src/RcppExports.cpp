@@ -6,14 +6,20 @@
 
 using namespace Rcpp;
 
-// rcpp_hello_world
-void rcpp_hello_world();
-RcppExport SEXP nabo_rcpp_hello_world() {
+// knn1
+List knn1(Eigen::Map<Eigen::MatrixXd> M, Eigen::Map<Eigen::VectorXd> q, const int k);
+RcppExport SEXP nabo_knn1(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP) {
 BEGIN_RCPP
+    SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        rcpp_hello_world();
+        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
+        Rcpp::traits::input_parameter< Eigen::Map<Eigen::VectorXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const int >::type k(kSEXP );
+        List __result = knn1(M, q, k);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
-    return R_NilValue;
+    UNPROTECT(1);
+    return __sexp_result;
 END_RCPP
 }
