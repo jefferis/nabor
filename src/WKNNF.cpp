@@ -34,6 +34,27 @@ class WKNNF {
     }
   }
 
+  List query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps=0.0) {
+
+    MatrixXf queryf = query.cast<float>();
+    queryf.transposeInPlace();
+
+    MatrixXi indices(k, queryf.cols());
+    MatrixXf dists2(k, queryf.cols());
+    
+    tree->knn(queryf, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
+    
+    // 1-index for R
+    indices = (indices.array()+1).matrix();
+    indices.transposeInPlace();
+    // unsquare distances
+    MatrixXd dists = (dists2.array().sqrt()).matrix().cast<double>();
+    dists.transposeInPlace();
+    
+    return Rcpp::List::create(Rcpp::Named("indices")=indices,
+    Rcpp::Named("dists")=dists);
+  }
+  
   private:
   Eigen::MatrixXf data_pts;
   NNSearchF* tree;
@@ -43,5 +64,6 @@ RCPP_MODULE(class_WKNNF) {
   class_<WKNNF>( "WKNNF" )
   .constructor<Eigen::Map<Eigen::MatrixXd> >()
   .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
+  .method( "query", &WKNNF::query )
   ;
 }
