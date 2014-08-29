@@ -3,7 +3,7 @@
 #' @details If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
 #'   linear heap when \code{k < 30} nearest neighbours are requested (equivalent
 #'   to \code{searchtype="kd_linear_heap"}), a k-d tree with a tree heap 
-#'   otherwise (equivalent to \code{searchtype="kd_tree_heap"}).
+#'   otherwise (equivalent to \code{searchtype="kd_tree_heap"}). 
 #'   \code{searchtype="brute"} checks all point combinations and is intended for
 #'   validation only.
 #'   
@@ -13,8 +13,8 @@
 #' @param k an integer number of nearest neighbours to find
 #' @param eps An approximate error bound. The default of 0 implies exact 
 #'   matching.
-#' @param searchtype A character vector indicating the a search type. See 
-#'   details.
+#' @param searchtype A character vector indicating the a search type, defaulting
+#'   to "auto". See details.
 #' @return A list with elements \code{nn.idx} (1-indexed indices) and 
 #'   \code{nn.dists} (distances), both of which are N x k matrices
 #' @export

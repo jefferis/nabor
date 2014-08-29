@@ -20,8 +20,8 @@ and \code{query} must have same dimension)}
 \item{eps}{An approximate error bound. The default of 0 implies exact
 matching.}
 
-\item{searchtype}{A character vector indicating the a search type. See
-details.}
+\item{searchtype}{A character vector indicating the a search type, defaulting
+to "auto". See details.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and
