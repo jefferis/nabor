@@ -1,6 +1,6 @@
-context("WKNN")
+context("WKNNF")
 
-test_that("constructing WKNN and getting points", {
+test_that("constructing WKNNF and getting points", {
   data(kcpoints)
   expect_is(w1<-WKNNF(kcpoints[[1]]),"WKNNF")
   expect_equivalent(w1$getPoints(), kcpoints[[1]])
