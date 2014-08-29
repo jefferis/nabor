@@ -26,40 +26,30 @@ test_that("Queries using WKNND objects", {
   expect_equal(w1$queryWKNND(w2$.CppObject, 1, 0), nn2(p1, p2, k=1))
 })
 
-knn_nn2_form<-function(d, q, k, eps=0){
-  knnresult <- knn(t(d), t(q), k=k, eps=eps)
-  # transpose and rename
-  structure(lapply(knnresult, t), .Names=c("nn.idx", "nn.dists"))
-}
-
 test_that("equivalence of WKNND and knn, nn2 queries", {
   p1=kcpoints[[1]]
   w1=WKNND(p1)
   p2=kcpoints[[2]]
   w2=WKNND(p2)
-  knnq12<-knn_nn2_form(p1, p2, k=5)
-  knnq11<-knn_nn2_form(p1, p1, k=5)
-  knnq22<-knn_nn2_form(p2, p2, k=5)
-  knnq21<-knn_nn2_form(p2, p1, k=5)
+  knnq12<-knn(p1, p2, k=5)
+  knnq11<-knn(p1, p1, k=5)
+  knnq22<-knn(p2, p2, k=5)
+  knnq21<-knn(p2, p1, k=5)
   
   expect_equal(w1$query(p2, 5, 0), knnq12)
   expect_equal(w1$query(p2, 5, 0), nn2(p1, p2, k=5, eps=0))
-  expect_equal(w1$queryWKNND(w2$.CppObject, 5, 0), knnq12)
   expect_equal(w1$queryWKNND(w2$.CppObject, 5, 0), nn2(p1, p2, k=5, eps=0))
   
   expect_equal(w1$query(p1, 5, 0), knnq11)
   expect_equal(w1$query(p1, 5, 0), nn2(p1, p1, k=5, eps=0))
-  expect_equal(w1$queryWKNND(w1$.CppObject, 5, 0), knnq11)
   expect_equal(w1$queryWKNND(w1$.CppObject, 5, 0), nn2(p1, p1, k=5, eps=0))
   
   expect_equal(w2$query(p2, 5, 0), knnq22)
   expect_equal(w2$query(p2, 5, 0), nn2(p2, p2, k=5, eps=0))
-  expect_equal(w2$queryWKNND(w2$.CppObject, 5, 0), knnq22)
   expect_equal(w2$queryWKNND(w2$.CppObject, 5, 0), nn2(p2, p2, k=5, eps=0))
 
-  expect_equal(w2$query(p1, 5, 0), knnq22)
+  expect_equal(w2$query(p1, 5, 0), knnq21)
   expect_equal(w2$query(p1, 5, 0), nn2(p2, p1, k=5, eps=0))
-  expect_equal(w2$queryWKNND(w1$.CppObject, 5, 0), knnq21)
   expect_equal(w2$queryWKNND(w1$.CppObject, 5, 0), nn2(p2, p1, k=5, eps=0))
   
   set.seed(42)
