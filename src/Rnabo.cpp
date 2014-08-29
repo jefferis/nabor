@@ -8,90 +8,41 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
-//' Find K nearest neighbours for a single query point
+#include "WKNND.h"
+
+List knn_generic(Nabo::NNSearchD::SearchType st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
+  
+  // create WKNND object but don't build tree
+  WKNND tree = WKNND(data, false);
+  // build tree using appropriate search type
+  tree.build_tree(st);
+  
+  return tree.query(query, k, eps);
+}
+
+//' Find K nearest neighbours for multiple query points
 //' 
-//' @details note that libnabo returns squared distances by default, but we 
-//'   unsquare them.
-//' @param M dxM matrix of M target points with dimension d
-//' @param q a length d vector defining a query point
+//' @description knn uses a k-d tree optimised for k ~< 30 nearest neighbours
+//' 
+//' @param data Mxd matrix of M target points with dimension d
+//' @param query Nxd matrix of N query points with dimension d (nb \code{data} and 
+//'   \code{query} must have same dimension)
 //' @param k an integer number of nearest neighbours to find
 //' @param eps An approximate error bound. The default of 0 implies exact
 //'   matching.
-//' @return A list with elements \code{indices} (1-indexed indices) and 
-//'   \code{dists} (distances)
+//' @return A list with elements \code{nn.idx} (1-indexed indices) and 
+//'   \code{nn.dists} (distances), both of which are N x k matrices
 //' @export
 // [[Rcpp::export]]
-List knn1(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::VectorXd> q, const int k, const double eps=0.0) {
+List knn(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps=0.0) {
   
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
-  
-  VectorXi indices(k);
-  VectorXd dists2(k);
-  nns->knn(q, indices, dists2, k, eps, NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
-
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
+  return knn_generic(NNSearchD::KDTREE_LINEAR_HEAP, data, query, k, eps);
 }
-//' Find K nearest neighbours for multiple query points
-//' @param q dxN matrix of N query points with dimension d (nb \code{M} and 
-//'   \code{q} must have same dimension)
-//' @inheritParams knn1
-//' @return A list with elements \code{indices} (1-indexed indices) and 
-//'   \code{dists} (distances), both of which are k x N matrices
+
+//' @description knn_brute checks all point combinations (for validation only)
 //' @export
+//' @rdname knn
 // [[Rcpp::export]]
-List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps=0.0) {
-  
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createKDTreeLinearHeap(M);
-  
-  MatrixXi indices;
-  MatrixXd dists2;
-  indices.resize(k, q.cols());
-  dists2.resize(k, q.cols());
-
-  nns->knn(q, indices, dists2, k, eps, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
-}
-
-// [[Rcpp::export]]
-List knn_brute(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k) {
-  
-  // create a kd-tree for M, note that M must stay valid during the lifetime of the kd-tree
-  NNSearchD* nns = NNSearchD::createBruteForce(M);
-  
-  MatrixXi indices;
-  MatrixXd dists2;
-  indices.resize(k, q.cols());
-  dists2.resize(k, q.cols());
-
-  nns->knn(q, indices, dists2, k, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
-  
-  // 1-index for R
-  indices = (indices.array()+1).matrix();
-  // unsquare distances
-  dists2 = (dists2.array().sqrt()).matrix();
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("indices")=indices,
-                            Rcpp::Named("dists")=dists2);
+List knn_brute(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k) {
+  return knn_generic(NNSearchD::BRUTE_FORCE, data, query, k, 0.0);
 }

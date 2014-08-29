@@ -4,6 +4,6 @@
 \alias{WKNNF}
 \title{A wrapper class for k-NN search using float (4 byte) data points}
 \description{
-A wrapper class for k-NN search using float (4 byte) data points
+This expects and returns doubles but uses floats internally
 }
 
