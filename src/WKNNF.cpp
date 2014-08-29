@@ -67,6 +67,12 @@ class WKNNF {
       Rcpp::Named("dists")=dists);
   }
   
+  Eigen::MatrixXd getPoints() {
+    // transpose for R
+    MatrixXd points = data_pts.transpose().cast<double>();
+    return points;
+  }
+
   private:
   Eigen::MatrixXf data_pts;
   NNSearchF* tree;
@@ -78,5 +84,6 @@ RCPP_MODULE(class_WKNNF) {
   .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
   .method( "query", &WKNNF::query )
   .method( "queryWKNNF", &WKNNF::queryWKNNF )
+  .method( "getPoints", &WKNNF::getPoints )
   ;
 }
