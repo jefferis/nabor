@@ -24,9 +24,9 @@
 #'   \code{WKNN} objects can give significant advantages. You can obtain further
 #'   benefits in some cases by converting the query points into WKNNF objects
 #'   without building the trees.
-#' @name WKNNF
+#' @name WKNNF-class
 #' @aliases WKNN
-#' @rdname WKNN
+#' @rdname WKNN-class
 #' @exportClass WKNNF
 #' @export WKNNF
 #' @seealso \code{\link{knn}}
@@ -59,8 +59,8 @@
 #' str(qall)
 WKNNF <- setRcppClass("WKNNF")
 
-#' @name WKNND
-#' @rdname WKNN
+#' @name WKNND-class
+#' @rdname WKNN-class
 #' @exportClass WKNND
 #' @export WKNND
 WKNND <- setRcppClass("WKNND")
