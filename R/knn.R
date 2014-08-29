@@ -50,5 +50,5 @@ knn <- function(data, query, k, eps = 0.0, searchtype=1L) {
   } else {
     if(searchtype>4L || searchtype<1L) stop("Unknown search type!")
   }
-  .Call('nabo_knn_generic', PACKAGE = 'nabo', searchtype, data, query, k, eps)
+  .Call('nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
 }

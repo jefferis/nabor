@@ -1,6 +1,6 @@
 #' Wrapper for libnabo K Nearest Neighbours C++ library
 #' 
-#' R package **nabo** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
+#' R package **nabor** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
 #' a fast K Nearest Neighbour library for low-dimensional spaces. The package 
 #' provides both standalone functions (see \code{\link{knn}} for basic queries 
 #' and also the option to produce an object containing the k-d tree search 
@@ -14,9 +14,9 @@
 #' coordinate implementations of the classes wrapping the search tree 
 #' structures. See the github repository and Elsenberg et al paper below for
 #' details.
-#' @name nabo-package
-#' @aliases nabo
-#' @useDynLib nabo
+#' @name nabor-package
+#' @aliases nabor
+#' @useDynLib nabor
 #' @import Rcpp RcppEigen methods
 #' @references Elseberg J, Magnenat S, Siegwart R and Nuechter A (2012). 
 #'   "Comparison of nearest-neighbor-search strategies and implementations for 

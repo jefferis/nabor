@@ -1,20 +1,20 @@
-# nabo
-[![Build Status](https://travis-ci.org/jefferis/nabo.svg)](https://travis-ci.org/jefferis/nabo) 
+# nabor
+[![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
 
-R package **nabo** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
+R package **nabor** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
 a fast K Nearest Neighbour library for low-dimensional spaces.
 
 ## Quick start
 ```r
 # install (see below for details)
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github("jefferis/nabo")
+devtools::install_github("jefferis/nabor")
 
 # use
-library(nabo)
+library(nabor)
 
 # help
-?nabo
+?nabor
 ?knn
 
 # run examples
@@ -23,17 +23,17 @@ example(WKNN)
 
 # run tests
 library(testthat)
-test_package("nabo")
+test_package("nabor")
 
 # cite
-citation("nabo")
+citation("nabor")
 ```
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
 so you must install from source.
 
 ### Prerequisites
-The **nabo** package is known to compile from source with the standard 
+The **nabor** package is known to compile from source with the standard 
 toolchains for R under MacOS X, Windows and Linux.
 See http://www.rstudio.com/products/rpackages/devtools/ for details of the
 developer toolchains needed for your platform.
@@ -44,20 +44,20 @@ package to install the development version of the package:
 
 ```r
 if (!require("devtools")) install.packages("devtools")
-devtools::install_github("jefferis/nabo")
+devtools::install_github("jefferis/nabor")
 ```
 ### Dependencies
-The **nabo** package includes libnabo and all of its dependencies (boost, via 
+The **nabor** package includes libnabo and all of its dependencies (boost, via 
 package **BH**) and Eigen (via package **RcppEigen**) and therefore does not
 depend on any system libraries.
 
 ## Acknowlegements
-**libnabo** and therefore the **nabo** R package are released under the 
+**libnabo** and therefore the **nabor** R package are released under the 
 [BSD 3 clause licesen](http://www.r-project.org/Licenses/BSD_3_clause). If you
-make use of **nabo** please cite the original authors:
+make use of **nabor** please cite the original authors:
 
 ```r
-> citation('nabo')
+> citation('nabor')
 
 Elseberg J, Magnenat S, Siegwart R and Nüchter A (2012). “Comparison of nearest-neighbor-search
 strategies and implementations for efficient shape registration.” _Journal of Software Engineering for

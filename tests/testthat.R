@@ -1,5 +1,5 @@
 library(testthat)
-library(nabo)
+library(nabor)
 library(RANN)
 
-test_check("nabo")
+test_check("nabor")
