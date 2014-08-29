@@ -70,7 +70,7 @@ depend on any system libraries.
 [BSD 3 clause license](http://www.r-project.org/Licenses/BSD_3_clause). If you
 make use of **nabo** please cite the original authors:
 
-```r
+```
 > citation('nabo')
 
 Elseberg J, Magnenat S, Siegwart R and Nüchter A (2012). “Comparison of nearest-neighbor-search
