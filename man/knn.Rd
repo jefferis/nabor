@@ -3,8 +3,7 @@
 \alias{knn}
 \title{Find K nearest neighbours for multiple query points}
 \usage{
-knn(data, query, k, eps = 0, searchtype = c("auto", "kd_linear_heap",
-  "kd_tree_heap", "brute"))
+knn(data, query, k, eps = 0, searchtype = 1L)
 }
 \arguments{
 \item{data}{Mxd matrix of M target points with dimension d}
@@ -17,8 +16,8 @@ and \code{query} must have same dimension)}
 \item{eps}{An approximate error bound. The default of 0 implies exact
 matching.}
 
-\item{searchtype}{A character vector indicating the a search type, defaulting
-to "auto". See details.}
+\item{searchtype}{A character vector or integer indicating the search type.
+The default value of \code{1L} is equivalent to "auto". See details.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and
@@ -34,5 +33,9 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   otherwise (equivalent to \code{searchtype="kd_tree_heap"}).
   \code{searchtype="brute"} checks all point combinations and is intended for
   validation only.
+
+  Integer values of searchtype should be the 1-indexed position in the vector
+  \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value
+  between 1L and 4L.
 }
 
