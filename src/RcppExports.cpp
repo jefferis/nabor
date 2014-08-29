@@ -7,17 +7,17 @@
 using namespace Rcpp;
 
 // knn
-List knn(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k, const double eps = 0.0);
-RcppExport SEXP nabo_knn(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP, SEXP epsSEXP) {
+List knn(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps = 0.0);
+RcppExport SEXP nabo_knn(SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type data(dataSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type query(querySEXP );
         Rcpp::traits::input_parameter< const int >::type k(kSEXP );
         Rcpp::traits::input_parameter< const double >::type eps(epsSEXP );
-        List __result = knn(M, q, k, eps);
+        List __result = knn(data, query, k, eps);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
@@ -25,16 +25,16 @@ BEGIN_RCPP
 END_RCPP
 }
 // knn_brute
-List knn_brute(const Eigen::Map<Eigen::MatrixXd> M, const Eigen::Map<Eigen::MatrixXd> q, const int k);
-RcppExport SEXP nabo_knn_brute(SEXP MSEXP, SEXP qSEXP, SEXP kSEXP) {
+List knn_brute(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k);
+RcppExport SEXP nabo_knn_brute(SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type M(MSEXP );
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type q(qSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type data(dataSEXP );
+        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type query(querySEXP );
         Rcpp::traits::input_parameter< const int >::type k(kSEXP );
-        List __result = knn_brute(M, q, k);
+        List __result = knn_brute(data, query, k);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
