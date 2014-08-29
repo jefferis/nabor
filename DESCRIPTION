@@ -1,7 +1,7 @@
 Package: nabo
 Type: Package
 Title: Wraps libnabo: fast K Nearest Neighbor library for low-dimensional spaces
-Version: 0.1
+Version: 0.2
 Date: 2014-08-28
 Author: Stephane Mangenat (for libnabo), Gregory Jefferis
 Maintainer: Gregory Jefferis <jefferis@gmail.com>

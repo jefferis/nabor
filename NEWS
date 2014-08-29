@@ -1,0 +1,6 @@
+nabo 0.2
+========
+
+* first public version (github)
+* includes knn function (with different search types, defaulting to auto)
+* ... and WKNNF and WKNND classes that wrap a tree object
