@@ -3,7 +3,6 @@
 export(WKNND)
 export(WKNNF)
 export(knn)
-export(knn1)
 exportClasses(WKNND)
 exportClasses(WKNNF)
 import(Rcpp)

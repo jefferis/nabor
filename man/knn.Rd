@@ -6,10 +6,10 @@
 knn(M, q, k, eps = 0)
 }
 \arguments{
+\item{M}{dxM matrix of M target points with dimension d}
+
 \item{q}{dxN matrix of N query points with dimension d (nb \code{M} and
 \code{q} must have same dimension)}
-
-\item{M}{dxM matrix of M target points with dimension d}
 
 \item{k}{an integer number of nearest neighbours to find}
 
@@ -22,5 +22,9 @@ A list with elements \code{indices} (1-indexed indices) and
 }
 \description{
 Find K nearest neighbours for multiple query points
+}
+\details{
+note that libnabo returns squared distances by default, but we
+  unsquare them.
 }
 
