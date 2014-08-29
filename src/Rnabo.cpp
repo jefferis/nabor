@@ -8,35 +8,16 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
-List knn_generic(Nabo::NNSearchD::SearchType st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k ) {
-  
-  // transpose to d dims x N points
-  MatrixXd datat = data.transpose();
-  // transpose to d dims x N points
-  MatrixXd queryt = query.transpose();
+#include "WKNND.h"
 
-  // create a kd-tree for data
-  // note that we are specifying the dimension and search type
-  NNSearchD* nns = NNSearchD::create(datat, data.rows(), st);
+List knn_generic(Nabo::NNSearchD::SearchType st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
   
-  // result matrices
-  MatrixXi indices(k, queryt.cols());
-  MatrixXd dists2(k, queryt.cols());
-
-  nns->knn(queryt, indices, dists2, k, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
+  // create WKNND object but don't build tree
+  WKNND tree = WKNND(data, false);
+  // build tree using appropriate search type
+  tree.build_tree(st);
   
-  // transpose and 1-index for R
-  indices.transposeInPlace();
-  indices.array()+=1;
-  
-  // transpose and unsquare distances for R
-  MatrixXd dists = dists2.cwiseSqrt().transpose();
-    
-  // cleanup kd-tree
-  delete nns;
-  
-  return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
-                            Rcpp::Named("nn.dists")=dists);
+  return tree.query(query, k, eps);
 }
 
 //' Find K nearest neighbours for multiple query points
@@ -55,7 +36,7 @@ List knn_generic(Nabo::NNSearchD::SearchType st, const Eigen::Map<Eigen::MatrixX
 // [[Rcpp::export]]
 List knn(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps=0.0) {
   
-  return knn_generic(NNSearchD::KDTREE_LINEAR_HEAP, data, query, k);
+  return knn_generic(NNSearchD::KDTREE_LINEAR_HEAP, data, query, k, eps);
 }
 
 //' @description knn_brute checks all point combinations (for validation only)
@@ -63,5 +44,5 @@ List knn(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixX
 //' @rdname knn
 // [[Rcpp::export]]
 List knn_brute(const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k) {
-  return knn_generic(NNSearchD::BRUTE_FORCE, data, query, k);
+  return knn_generic(NNSearchD::BRUTE_FORCE, data, query, k, 0.0);
 }
