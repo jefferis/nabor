@@ -3,13 +3,14 @@
 \alias{knn}
 \title{Find K nearest neighbours for multiple query points}
 \usage{
-knn(data, query, k, eps = 0, searchtype = 1L)
+knn(data, query = data, k, eps = 0, searchtype = 1L)
 }
 \arguments{
 \item{data}{Mxd matrix of M target points with dimension d}
 
 \item{query}{Nxd matrix of N query points with dimension d (nb \code{data}
-and \code{query} must have same dimension)}
+and \code{query} must have same dimension). If missing defaults to
+\code{data} i.e. a self-query.}
 
 \item{k}{an integer number of nearest neighbours to find}
 
@@ -48,6 +49,13 @@ str(nn1)
 # 5 nearest neighbours
 nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
 str(nn5)
+# Self match within first pointset, all distances will be 0
+nnself1 <- knn(data=kcpoints[[1]], k=1)
+str(nnself1)
+# neighbour 2 will be the nearest point
+nnself2 <- knn(data=kcpoints[[1]], k=2)
+
+## Advanced usage
 # nearest neighbour with 10\% error bound
 nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
 str(nn1.approx)
