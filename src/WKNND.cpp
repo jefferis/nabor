@@ -17,7 +17,7 @@ WKNND::WKNND(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
 
 void WKNND::build_tree(NNSearchD::SearchType treetype) {
   if(tree==0) {
-    tree = NNSearchD::createKDTreeLinearHeap(data_pts, data_pts.rows(), treetype);
+    tree = NNSearchD::create(data_pts, data_pts.rows(), treetype);
   }
 }
 
