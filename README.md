@@ -1,8 +1,11 @@
 # nabor
 [![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
 
-R package **nabor** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
-a fast K Nearest Neighbour library for low-dimensional spaces.
+R package **nabor** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
+a fast K Nearest Neighbour library for low-dimensional spaces implemented in templated C++.
+In comparison with the widely used [ANN](http://www.cs.umd.edu/~mount/ANN) library (wrapped by the
+[RANN](http://cran.r-project.org/web/packages/RANN/index.html) R package), **libnabo** is reported
+to be 5% to 20% faster with more compact data structures.
 
 ## Quick start
 ```r
@@ -28,6 +31,17 @@ test_package("nabor")
 # cite
 citation("nabor")
 ```
+
+## nabo vs RANN
+For R users this package provides a function, `knn`, that is a drop in replacement for
+the `nn2` function in the [RANN](http://cran.r-project.org/web/packages/RANN/index.html) 
+R package. I have seen speedups of 2-3x fold for queries of interest (a few thousand
+points in 3d) when comparing nabor::knn and RANN::nn2. See `?knn` for details.
+
+Furthermore **nabor** provides a mechanism for reusing wrapping a libnabo k-d tree
+and associated points for multiple queries. This achieved by using RcppModules to wrap
+a C++ class in an R reference class. See `?WKNN` for details.
+
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
 so you must install from source.
@@ -53,10 +67,10 @@ depend on any system libraries.
 
 ## Acknowlegements
 **libnabo** and therefore the **nabor** R package are released under the 
-[BSD 3 clause licesen](http://www.r-project.org/Licenses/BSD_3_clause). If you
+[BSD 3 clause license](http://www.r-project.org/Licenses/BSD_3_clause). If you
 make use of **nabor** please cite the original authors:
 
-```r
+```
 > citation('nabor')
 
 Elseberg J, Magnenat S, Siegwart R and Nüchter A (2012). “Comparison of nearest-neighbor-search
@@ -77,3 +91,7 @@ A BibTeX entry for LaTeX users is
   }
 
 ```
+
+nabor also makes use of the tremendous [Rcpp](http://cran.r-project.org/web/packages/Rcpp/index.html)
+and [RcppEigen](http://cran.r-project.org/web/packages/RcppEigen/index.html) packages –
+kudos to their authors!
