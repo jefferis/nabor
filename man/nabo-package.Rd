@@ -21,7 +21,7 @@ structures. See the github repository and Elsenberg et al paper below for
 details.
 }
 \references{
-Elseberg J, Magnenat S, Siegwart R and Nüchter A (2012).
+Elseberg J, Magnenat S, Siegwart R and Nuechter A (2012).
   "Comparison of nearest-neighbor-search strategies and implementations for
   efficient shape registration." _Journal of Software Engineering for
   Robotics (JOSER)_, *3*(1), pp. 2-12. ISSN 2035-3928.
