@@ -35,10 +35,3 @@ knn <- function(data, query, k, eps = 0.0,
   
   .Call('nabo_knn_generic', PACKAGE = 'nabo', int_search_type, data, query, k, eps)
 }
-
-#' @description knn_brute checks all point combinations (for validation only)
-#' @export
-#' @rdname knn
-knn_brute <- function(data, query, k) {
-  knn(data, query, k, eps=0.0, searchtype='brute')
-}
