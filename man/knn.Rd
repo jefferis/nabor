@@ -4,28 +4,40 @@
 \alias{knn_brute}
 \title{Find K nearest neighbours for multiple query points}
 \usage{
-knn(data, query, k, eps = 0)
+knn(data, query, k, eps = 0, searchtype = c("auto", "kd_linear_heap",
+  "kd_tree_heap", "brute"))
 
 knn_brute(data, query, k)
 }
 \arguments{
 \item{data}{Mxd matrix of M target points with dimension d}
 
-\item{query}{Nxd matrix of N query points with dimension d (nb \code{data} and
-\code{query} must have same dimension)}
+\item{query}{Nxd matrix of N query points with dimension d (nb \code{data}
+and \code{query} must have same dimension)}
 
 \item{k}{an integer number of nearest neighbours to find}
 
 \item{eps}{An approximate error bound. The default of 0 implies exact
 matching.}
+
+\item{searchtype}{A character vector indicating the a search type. See
+details.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and
   \code{nn.dists} (distances), both of which are N x k matrices
 }
 \description{
-knn uses a k-d tree optimised for k ~< 30 nearest neighbours
+Find K nearest neighbours for multiple query points
 
 knn_brute checks all point combinations (for validation only)
+}
+\details{
+If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
+  linear heap when \code{k < 30} nearest neighbours are requested (equivalent
+  to \code{searchtype="kd_linear_heap"}), a k-d tree with a tree heap
+  otherwise (equivalent to \code{searchtype="kd_tree_heap"}).
+  \code{searchtype="brute"} checks all point combinations and is intended for
+  validation only.
 }
 
