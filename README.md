@@ -4,13 +4,6 @@
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/).
 
-### Released versions
-Released versions are available from our lab repository:
-
-```r
-install.packages("nabo",repos='http://jefferislab.org/R',type='source')
-```
-
 ### Bleeding Edge
 You can use the **devtools** package to install the development version:
 
