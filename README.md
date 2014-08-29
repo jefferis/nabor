@@ -1,8 +1,11 @@
 # nabo
 [![Build Status](https://travis-ci.org/jefferis/nabo.svg)](https://travis-ci.org/jefferis/nabo) 
 
-R package **nabo** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
-a fast K Nearest Neighbour library for low-dimensional spaces.
+R package **nabo** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
+a fast K Nearest Neighbour library for low-dimensional spaces implemented in templated C++.
+In comparison with the widely used [ANN](http://www.cs.umd.edu/~mount/ANN) library (wrapped by the
+[RANN](http://cran.r-project.org/web/packages/RANN/index.html) R package), **libnabo** is reported
+to be 5% to 20% faster with more compact data structures.
 
 ## Quick start
 ```r
@@ -28,6 +31,17 @@ test_package("nabo")
 # cite
 citation("nabo")
 ```
+
+## nabo vs RANN
+For R users this package provides a function, `knn`, that is a drop in replacement for
+the `nn2` function in the [RANN](http://cran.r-project.org/web/packages/RANN/index.html) 
+R package. I have seen speedups of 2-3x fold for queries of interest (a few thousand
+points in 3d) when comparing nabo::knn and RANN::nn2. See `?knn` for details.
+
+Furthermore **nabo** provides a mechanism for reusing wrapping a libnabo k-d tree
+and associated points for multiple queries. This achieved by using RcppModules to wrap
+a C++ class in an R reference class. See `?WKNN` for details.
+
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
 so you must install from source.
@@ -77,3 +91,7 @@ A BibTeX entry for LaTeX users is
   }
 
 ```
+
+nabo also makes use of the tremendous [Rcpp](http://cran.r-project.org/web/packages/Rcpp/index.html)
+and [RcppEigen](http://cran.r-project.org/web/packages/RcppEigen/index.html) packages –
+kudos to their authors!
