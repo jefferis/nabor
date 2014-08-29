@@ -50,5 +50,12 @@ knn <- function(data, query, k, eps = 0.0, searchtype=1L) {
   } else {
     if(searchtype>4L || searchtype<1L) stop("Unknown search type!")
   }
+  
+  # Check input points
+  if(!is.matrix(data))
+    data <- as.matrix(data, rownames.force = FALSE)
+  if(!is.matrix(query))
+    query <- as.matrix(query, rownames.force = FALSE)
+
   .Call('nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
 }

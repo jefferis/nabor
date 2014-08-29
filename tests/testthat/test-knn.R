@@ -25,3 +25,17 @@ library(RANN)
 test_that('knn and RANN:nn2 agree',{
   expect_equal(knn(d, q, k=5), nn2(data=d, query=q, k=5))
 })
+
+
+test_that("knn with different input types",{
+  m=matrix(rnorm(200), ncol = 2)
+  df=data.frame(m)
+  expect_equal(knn(df, df, k=1), nn2(m, m, k=1))
+  # matrix vs vector input for 1d case
+  expect_equal(knn(m[,1, drop=FALSE], m[,2, drop=FALSE], k=1), knn(m[,1], m[,2], k=1))
+})
+
+test_that("nn2 with bad data", {
+  m=matrix(NA_real_, ncol=2, nrow=3)
+  expect_is(knn(m, m, k=1), 'list')
+})
