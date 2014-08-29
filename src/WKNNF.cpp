@@ -63,8 +63,8 @@ class WKNNF {
     dists2.transposeInPlace();
     MatrixXd dists = dists2.cwiseSqrt().cast<double>();
     
-    return Rcpp::List::create(Rcpp::Named("indices")=indices,
-      Rcpp::Named("dists")=dists);
+    return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
+      Rcpp::Named("nn.dists")=dists);
   }
   
   Eigen::MatrixXd getPoints() {
