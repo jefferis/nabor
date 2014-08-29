@@ -20,9 +20,9 @@ class WKNND {
     delete_tree();
   }
   
-  void build_tree() {
+  void build_tree(NNSearchD::SearchType treetype=NNSearchD::KDTREE_LINEAR_HEAP) {
     if(tree==0) {
-      tree = NNSearchD::createKDTreeLinearHeap(data_pts);
+      tree = NNSearchD::createKDTreeLinearHeap(data_pts, data_pts.rows(), treetype);
     }
   }
 

@@ -21,9 +21,9 @@ class WKNNF {
     delete_tree();
   }
   
-  void build_tree() {
+  void build_tree(NNSearchF::SearchType treetype=NNSearchF::KDTREE_LINEAR_HEAP) {
     if(tree==0) {
-      tree = NNSearchF::createKDTreeLinearHeap(data_pts);
+      tree = NNSearchF::createKDTreeLinearHeap(data_pts, data_pts.rows(), treetype);
     }
   }
 
