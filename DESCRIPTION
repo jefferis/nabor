@@ -15,7 +15,8 @@ Copyright: libnabo is copyright 2010--2011, Stephane Magnenat, ASL, ETHZ,
 URL: https://github.com/jefferis/nabo https://github.com/ethz-asl/libnabo
 Imports:
     Rcpp (>= 0.11.2),
-    RcppEigen
+    RcppEigen,
+    methods
 LinkingTo: Rcpp, RcppEigen, BH
 Suggests:
     testthat,
