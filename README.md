@@ -32,16 +32,18 @@ test_package("nabor")
 citation("nabor")
 ```
 
-## nabo vs RANN
-For R users this package provides a function, `knn`, that is a drop in replacement for
+## nabor vs RANN
+For R users **nabor** provides a function, `knn`, that is a drop in replacement for
 the `nn2` function in the [RANN](http://cran.r-project.org/web/packages/RANN/index.html) 
 R package. I have seen speedups of 2-3x fold for queries of interest (a few thousand
-points in 3d) when comparing nabor::knn and RANN::nn2. See `?knn` for details.
+points in 3d, k=1) when comparing nabor::knn and RANN::nn2. See `?knn` for details.
 
-Furthermore **nabor** provides a mechanism for reusing wrapping a libnabo k-d tree
-and associated points for multiple queries. This achieved by using RcppModules to wrap
-a C++ class in an R reference class. See `?WKNN` for details.
-
+Furthermore **nabor** provides a mechanism for reusing the k-d search tree structure for 
+multiple queries. This is achieved by wrapping a libnabo k-d tree and associated points
+into a C++ class. This in turn is wrapped as an R reference class (by RcppModules)
+that can be used in R. See `?WKNN` for details. The `WKNNF` class has the additional
+feature of using floats (4 bytes per coordinate) for the underlying storage, rather
+than the doubles used by R; this may be useful for large pointsets.
 ## Installation
 Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
 so you must install from source.
@@ -92,6 +94,6 @@ A BibTeX entry for LaTeX users is
 
 ```
 
-nabor also makes use of the tremendous [Rcpp](http://cran.r-project.org/web/packages/Rcpp/index.html)
+**nabor** also makes use of the tremendous [Rcpp](http://cran.r-project.org/web/packages/Rcpp/index.html)
 and [RcppEigen](http://cran.r-project.org/web/packages/RcppEigen/index.html) packages –
 kudos to their authors!
