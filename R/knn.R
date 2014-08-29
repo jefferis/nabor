@@ -22,6 +22,25 @@
 #' @return A list with elements \code{nn.idx} (1-indexed indices) and 
 #'   \code{nn.dists} (distances), both of which are N x k matrices
 #' @export
+#' @examples
+#' ## Basic usage
+#' # load sample data consisting of list of 3 separate 3d pointets
+#' data(kcpoints)
+#' # Nearest neighbour in first pointset of all points in second pointset 
+#' nn1 <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1)
+#' str(nn1)
+#' # 5 nearest neighbours
+#' nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
+#' str(nn5)
+#' # nearest neighbour with 10% error bound
+#' nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
+#' str(nn1.approx)
+#' # 5 nearest neighbours, brute force search
+#' nn5.b <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype='brute')
+#' stopifnot(all.equal(nn5.b, nn5))
+#' # 5 nearest neighbours, brute force search (specified by int)
+#' nn5.b2 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype=2L)
+#' stopifnot(all.equal(nn5.b2, nn5.b))
 knn <- function(data, query, k, eps = 0.0, searchtype=1L) {
   if(is.character(searchtype)) {
     if(length(searchtype)!=1) stop("only 1 searchtype permitted!")

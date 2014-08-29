@@ -38,4 +38,24 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value
   between 1L and 4L.
 }
+\examples{
+## Basic usage
+# load sample data consisting of list of 3 separate 3d pointets
+data(kcpoints)
+# Nearest neighbour in first pointset of all points in second pointset
+nn1 <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1)
+str(nn1)
+# 5 nearest neighbours
+nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
+str(nn5)
+# nearest neighbour with 10\% error bound
+nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
+str(nn1.approx)
+# 5 nearest neighbours, brute force search
+nn5.b <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype='brute')
+stopifnot(all.equal(nn5.b, nn5))
+# 5 nearest neighbours, brute force search (specified by int)
+nn5.b2 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype=2L)
+stopifnot(all.equal(nn5.b2, nn5.b))
+}
 
