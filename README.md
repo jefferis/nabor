@@ -53,7 +53,7 @@ depend on any system libraries.
 
 ## Acknowlegements
 **libnabo** and therefore the **nabo** R package are released under the 
-[BSD 3 clause licesen](http://www.r-project.org/Licenses/BSD_3_clause). If you
+[BSD 3 clause license](http://www.r-project.org/Licenses/BSD_3_clause). If you
 make use of **nabo** please cite the original authors:
 
 ```r
