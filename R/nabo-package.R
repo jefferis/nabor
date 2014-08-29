@@ -1,9 +1,28 @@
-#' Wrapper libnabo Nearest Neighbours C++ library
-#'
+#' Wrapper for libnabo K Nearest Neighbours C++ library
+#' 
+#' R package **nabo** wraps the [libnabo](https://github.com/ethz-asl/libnabo), 
+#' a fast K Nearest Neighbour library for low-dimensional spaces. The package 
+#' provides both standalone functions (see \code{\link{knn}} for basic queries 
+#' and also the option to produce an object containing the k-d tree search 
+#' (\code{\link{WKNN}}) structure for making multiple queries against the same 
+#' target points.
+#' 
+#' libnabo uses the same approach as the ANN library (wrapped in R package 
+#' \code{RANN}) but is generally faster and with a smaller memory footprint. 
+#' Furthermore since it is templated on the underlying scalar type for 
+#' coordinates (among other things), we have provided both float and double 
+#' coordinate implementations of the classes wrapping the search tree 
+#' structures. See the github repository and Elsenberg et al paper below for
+#' details.
 #' @name nabo-package
 #' @aliases nabo
 #' @useDynLib nabo
 #' @import Rcpp RcppEigen methods
+#' @references Elseberg J, Magnenat S, Siegwart R and Nüchter A (2012). 
+#'   "Comparison of nearest-neighbor-search strategies and implementations for 
+#'   efficient shape registration." _Journal of Software Engineering for 
+#'   Robotics (JOSER)_, *3*(1), pp. 2-12. ISSN 2035-3928.
+#' @seealso \code{\link{knn}}, \code{\link{WKNN}}
 NULL
 
 #' List of 3 matrices containing 3D points from Drosophila neurons
