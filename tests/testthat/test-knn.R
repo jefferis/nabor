@@ -24,6 +24,7 @@ test_that('different knn search types agree',{
 library(RANN)
 test_that('knn and RANN:nn2 agree',{
   expect_equal(knn(d, q, k=5), nn2(data=d, query=q, k=5))
+  expect_equal(knn(d, k=5), nn2(data=d, k=5))
 })
 
 

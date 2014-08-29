@@ -8,12 +8,13 @@
 #'   validation only.
 #'   
 #'   Integer values of searchtype should be the 1-indexed position in the vector
-#'   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value
+#'   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value 
 #'   between 1L and 4L.
 #'   
 #' @param data Mxd matrix of M target points with dimension d
 #' @param query Nxd matrix of N query points with dimension d (nb \code{data} 
-#'   and \code{query} must have same dimension)
+#'   and \code{query} must have same dimension). If missing defaults to
+#'   \code{data} i.e. a self-query.
 #' @param k an integer number of nearest neighbours to find
 #' @param eps An approximate error bound. The default of 0 implies exact 
 #'   matching.
@@ -32,6 +33,13 @@
 #' # 5 nearest neighbours
 #' nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
 #' str(nn5)
+#' # Self match within first pointset, all distances will be 0
+#' nnself1 <- knn(data=kcpoints[[1]], k=1)
+#' str(nnself1)
+#' # neighbour 2 will be the nearest point 
+#' nnself2 <- knn(data=kcpoints[[1]], k=2)
+#' 
+#' ## Advanced usage
 #' # nearest neighbour with 10% error bound
 #' nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
 #' str(nn1.approx)
@@ -41,7 +49,7 @@
 #' # 5 nearest neighbours, brute force search (specified by int)
 #' nn5.b2 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype=2L)
 #' stopifnot(all.equal(nn5.b2, nn5.b))
-knn <- function(data, query, k, eps = 0.0, searchtype=1L) {
+knn <- function(data, query=data, k, eps = 0.0, searchtype=1L) {
   if(is.character(searchtype)) {
     if(length(searchtype)!=1) stop("only 1 searchtype permitted!")
     search_choices=c("auto", "brute", "kd_linear_heap", "kd_tree_heap")
