@@ -18,11 +18,8 @@ Depends:
     R (>= 3.0.2)
 Imports:
     Rcpp (>= 0.11.2),
-    RcppEigen,
     methods
-LinkingTo: Rcpp,
-    RcppEigen,
-    BH (>= 1.54.0-4)
+LinkingTo: Rcpp, RcppEigen, BH (>= 1.54.0-4)
 Suggests:
     testthat,
     RANN
