@@ -1,6 +1,15 @@
+nabor 0.3
+========
+* preparing for CRAN
+* rename package from nabo to nabor
+* fix handling of non-matrix inputs by knn
+* knn performs self-query when query is missing
+* dev: only link to RcppEigen
+* dev: remove boost/any.hpp header and insist on latest BH package (>= 1.54.0-4)
+  (also bumps R requirement to 3.0.2).
+
 nabor 0.2
 ========
-
 * first public version (github)
 * includes knn function (with different search types, defaulting to auto)
 * ... and WKNNF and WKNND classes that wrap a tree object
