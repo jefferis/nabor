@@ -25,7 +25,7 @@ struct WKNN {
   
   List queryWKNN(const WKNN& query, const int k, const double eps=0.0);
   
-  List queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int k, const double eps=0.0);
+  List queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps=0.0);
   
   Eigen::MatrixXd getPoints();
   

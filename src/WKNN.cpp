@@ -33,23 +33,23 @@ void WKNN<T>::delete_tree() {
 }
 
 template <typename T>
-  return queryD(query.template cast<T>().transpose(), k, eps);
 List WKNN<T>::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
+  return queryT(query.template cast<T>().transpose(), k, eps);
 }
 
 template <typename T>
 List WKNN<T>::queryWKNN(const WKNN& query, const int k, const double eps) {
-  return queryD(query.data_pts, k, eps);
+  return queryT(query.data_pts, k, eps);
 }
 
 template <typename T>
-List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int k, const double eps) {
-  MatrixXi indices(k, queryd.cols());
-  Eigen::Matrix<T, Dynamic, Dynamic> dists2(k, queryd.cols());
+List WKNN<T>::queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps) {
+  MatrixXi indices(k, queryT.cols());
+  Eigen::Matrix<T, Dynamic, Dynamic> dists2(k, queryT.cols());
   
   // build tree if required
   build_tree();
-  tree->knn(queryd, indices, dists2, k, eps, NearestNeighbourSearch<T>::SORT_RESULTS | NearestNeighbourSearch<T>::ALLOW_SELF_MATCH);
+  tree->knn(queryT, indices, dists2, k, eps, NearestNeighbourSearch<T>::SORT_RESULTS | NearestNeighbourSearch<T>::ALLOW_SELF_MATCH);
   
   // transpose and 1-index for R
   indices.transposeInPlace();
