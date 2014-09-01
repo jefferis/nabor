@@ -17,7 +17,7 @@
 #' @name nabor-package
 #' @aliases nabor
 #' @useDynLib nabor
-#' @import Rcpp RcppEigen methods
+#' @import Rcpp methods
 #' @references Elseberg J, Magnenat S, Siegwart R and Nuechter A (2012). 
 #'   "Comparison of nearest-neighbor-search strategies and implementations for 
 #'   efficient shape registration." _Journal of Software Engineering for 
