@@ -1,7 +1,7 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
 #include "nabo.h"
-#include "WKNND.h"
+#include "WKNN.h"
 
 // [[Rcpp::depends(RcppEigen)]]
 using namespace Rcpp;
@@ -10,36 +10,42 @@ using namespace Eigen;
 
 RCPP_EXPOSED_CLASS(WKNND)
 
-WKNND::WKNND(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
+template <typename T>
+WKNN<T>::WKNN(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > data, bool buildtree) : tree(0) {
+  data_pts = data.template cast<T>();
   data_pts = data.transpose();
   if(buildtree) build_tree();
 }
 
-void WKNND::build_tree(NNSearchD::SearchType treetype) {
+template <typename T>
+void WKNN<T>::build_tree(NNSearchD::SearchType treetype) {
   if(tree==0) {
-    tree = NNSearchD::create(data_pts, data_pts.rows(), treetype);
+    tree = NearestNeighbourSearch<T>::create(data_pts, data_pts.rows(), treetype);
   }
 }
 
-void WKNND::delete_tree() {
+template <typename T>
+void WKNN<T>::delete_tree() {
   if(tree!=0) {
     delete tree;
     tree=0;
   }
 }
 
-List WKNND::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
-  MatrixXd queryd = query.transpose();
-  return queryD(queryd, k, eps);
+template <typename T>
+List WKNN<T>::query(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > query, const int k, const double eps) {
+  return queryD(query.template cast<T>().transpose(), k, eps);
 }
 
-List WKNND::queryWKNND(const WKNND& query, const int k, const double eps) {
+template <typename T>
+List WKNN<T>::queryWKNN(const WKNN& query, const int k, const double eps) {
   return queryD(query.data_pts, k, eps);
 }
 
-List WKNND::queryD(const Eigen::MatrixXd& queryd, const int k, const double eps) {
+template <typename T>
+List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int k, const double eps) {
   MatrixXi indices(k, queryd.cols());
-  MatrixXd dists2(k, queryd.cols());
+  Eigen::Matrix<T, Dynamic, Dynamic> dists2(k, queryd.cols());
   
   // build tree if required
   build_tree();
@@ -50,25 +56,26 @@ List WKNND::queryD(const Eigen::MatrixXd& queryd, const int k, const double eps)
   indices.array()+=1;
   
   // transpose and unsquare distances for R
-  MatrixXd dists = dists2.cwiseSqrt().transpose();
+  Eigen::Matrix<T, Dynamic, Dynamic> dists = dists2.cwiseSqrt().transpose();
   
   return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
   Rcpp::Named("nn.dists")=dists);
 }
-
-Eigen::MatrixXd WKNND::getPoints() {
+template <typename T>
+Eigen::MatrixXd WKNN<T>::getPoints() {
   // transpose for R
   MatrixXd points = data_pts.transpose();
   return points;
 }
 
+typedef WKNN<double> WKNND;
 
 RCPP_MODULE(class_WKNND) {
   class_<WKNND>( "WKNND" )
   .constructor<Eigen::Map<Eigen::MatrixXd> >()
   .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
   .method( "query", &WKNND::query )
-  .method( "queryWKNND", &WKNND::queryWKNND )
+  .method( "queryWKNN", &WKNND::queryWKNND )
   .method( "getPoints", &WKNND::getPoints )
   ;
 }
