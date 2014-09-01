@@ -11,7 +11,7 @@ using namespace Nabo;
 using namespace Eigen;
 
 template<typename T>
-class WKNN {
+struct WKNN {
   public:
   WKNN(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > data, bool buildtree=true);
   
@@ -33,4 +33,9 @@ class WKNN {
   Eigen::Matrix<T, Dynamic, Dynamic> data_pts;
   NearestNeighbourSearch<T>* tree;
 };
+
+//typedef NearestNeighbourSearch<float> NNSearchF;
+	//! nearest neighbour search with scalars of type double
+typedef WKNN<double> WKNND;
+
 #endif
