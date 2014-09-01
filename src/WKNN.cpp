@@ -11,9 +11,8 @@ using namespace Eigen;
 RCPP_EXPOSED_CLASS_NODECL(WKNND)
 
 template <typename T>
-  data_pts = data.template cast<T>();
-  data_pts = data.transpose();
 WKNN<T>::WKNN(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
+  data_pts = data.template cast<T>().transpose();
   if(buildtree) build_tree();
 }
 
