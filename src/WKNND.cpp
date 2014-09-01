@@ -75,7 +75,7 @@ RCPP_MODULE(class_WKNND) {
   .constructor<Eigen::Map<Eigen::MatrixXd> >()
   .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
   .method( "query", &WKNND::query )
-  .method( "queryWKNN", &WKNND::queryWKNND )
+  .method( "queryWKNN", &WKNND::queryWKNN )
   .method( "getPoints", &WKNND::getPoints )
   ;
 }
