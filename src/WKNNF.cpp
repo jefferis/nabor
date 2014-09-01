@@ -1,6 +1,7 @@
 #include <Rcpp.h>
 #include <RcppEigen.h>
 #include "nabo.h"
+#include "WKNNF.h"
 
 // [[Rcpp::depends(RcppEigen)]]
 using namespace Rcpp;
@@ -9,74 +10,63 @@ using namespace Eigen;
 
 RCPP_EXPOSED_CLASS(WKNNF)
 
-class WKNNF {
-  public:
-  WKNNF(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree=true) : tree(0) {
-    data_pts = data.cast<float>();
-    data_pts.transposeInPlace();
-    if(buildtree) build_tree();
+WKNNF::WKNNF(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
+  data_pts = data.cast<float>();
+  data_pts.transposeInPlace();
+  if(buildtree) build_tree();
+}
+
+void WKNNF::build_tree(NNSearchF::SearchType treetype) {
+  if(tree==0) {
+    tree = NNSearchF::create(data_pts, data_pts.rows(), treetype);
   }
-    
-  ~WKNNF() {
-    delete_tree();
+}
+
+void WKNNF::delete_tree() {
+  if(tree!=0) {
+    delete tree;
+    tree=0;
   }
+}
+
+List WKNNF::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
   
-  void build_tree(NNSearchF::SearchType treetype=NNSearchF::KDTREE_LINEAR_HEAP) {
-    if(tree==0) {
-      tree = NNSearchF::create(data_pts, data_pts.rows(), treetype);
-    }
-  }
+  MatrixXf queryf = query.cast<float>();
+  queryf.transposeInPlace();
+  return queryF(queryf, k, eps);
+}
 
-  void delete_tree() {
-    if(tree!=0) {
-      delete tree;
-      tree=0;
-    }
-  }
-
-  List query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps=0.0) {
-
-    MatrixXf queryf = query.cast<float>();
-    queryf.transposeInPlace();
-    return queryF(queryf, k, eps);
-  }
+List WKNNF::queryWKNNF(const WKNNF& query, const int k, const double eps) {
   
-  List queryWKNNF(const WKNNF& query, const int k, const double eps=0.0) {
-    
-    return queryF(query.data_pts, k, eps);
-  }
-  
-  List queryF(const Eigen::MatrixXf& queryf, const int k, const double eps=0.0) {
+  return queryF(query.data_pts, k, eps);
+}
 
-    MatrixXi indices(k, queryf.cols());
-    MatrixXf dists2(k, queryf.cols());
-    
-    // build tree if required
-    build_tree();
-    tree->knn(queryf, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
-    
-    // transpose and 1-index for R
-    indices.transposeInPlace();
-    indices.array()+=1;
-    
-    // transpose and unsquare distances for R
-    dists2.transposeInPlace();
-    MatrixXd dists = dists2.cwiseSqrt().cast<double>();
-    
-    return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
-      Rcpp::Named("nn.dists")=dists);
-  }
+List WKNNF::queryF(const Eigen::MatrixXf& queryf, const int k, const double eps) {
   
-  Eigen::MatrixXd getPoints() {
-    // transpose for R
-    MatrixXd points = data_pts.transpose().cast<double>();
-    return points;
-  }
+  MatrixXi indices(k, queryf.cols());
+  MatrixXf dists2(k, queryf.cols());
+  
+  // build tree if required
+  build_tree();
+  tree->knn(queryf, indices, dists2, k, eps, NNSearchF::SORT_RESULTS | NNSearchF::ALLOW_SELF_MATCH);
+  
+  // transpose and 1-index for R
+  indices.transposeInPlace();
+  indices.array()+=1;
+  
+  // transpose and unsquare distances for R
+  dists2.transposeInPlace();
+  MatrixXd dists = dists2.cwiseSqrt().cast<double>();
+  
+  return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
+  Rcpp::Named("nn.dists")=dists);
+}
 
-  private:
-  Eigen::MatrixXf data_pts;
-  NNSearchF* tree;
-};
+Eigen::MatrixXd WKNNF::getPoints() {
+  // transpose for R
+  MatrixXd points = data_pts.transpose().cast<double>();
+  return points;
+}
 
 RCPP_MODULE(class_WKNNF) {
   class_<WKNNF>( "WKNNF" )
