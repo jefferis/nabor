@@ -61,12 +61,16 @@ List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int
   return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
   Rcpp::Named("nn.dists")=dists);
 }
+
 template <typename T>
 Eigen::MatrixXd WKNN<T>::getPoints() {
   // transpose for R
   MatrixXd points = data_pts.transpose();
   return points;
 }
+
+// Explicit template instantiation for linker
+template struct WKNN<double>;
 
 RCPP_MODULE(class_WKNND) {
   class_<WKNND>( "WKNND" )
