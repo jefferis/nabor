@@ -8,7 +8,7 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
-#include "WKNND.h"
+#include "WKNN.h"
 
 // [[Rcpp::export]]
 List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
