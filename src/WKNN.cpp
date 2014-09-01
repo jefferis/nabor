@@ -80,3 +80,17 @@ RCPP_MODULE(class_WKNND) {
   .method( "getPoints", &WKNND::getPoints )
   ;
 }
+
+RCPP_EXPOSED_CLASS_NODECL(WKNNF)
+// Explicit template instantiation for linker
+template struct WKNN<float>;
+
+RCPP_MODULE(class_WKNNF) {
+  class_<WKNNF>( "WKNNF" )
+  .constructor<Eigen::Map<Eigen::MatrixXd> >()
+  .constructor<Eigen::Map<Eigen::MatrixXd>,bool>()
+  .method( "query", &WKNNF::query )
+  .method( "queryWKNN", &WKNNF::queryWKNN )
+  .method( "getPoints", &WKNNF::getPoints )
+  ;
+}
