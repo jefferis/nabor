@@ -8,7 +8,7 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
-//RCPP_EXPOSED_CLASS(WKNND)
+RCPP_EXPOSED_CLASS_NODECL(WKNND)
 
 template <typename T>
 WKNN<T>::WKNN(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > data, bool buildtree) : tree(0) {
