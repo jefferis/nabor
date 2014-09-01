@@ -11,9 +11,9 @@ using namespace Eigen;
 RCPP_EXPOSED_CLASS_NODECL(WKNND)
 
 template <typename T>
-WKNN<T>::WKNN(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > data, bool buildtree) : tree(0) {
   data_pts = data.template cast<T>();
   data_pts = data.transpose();
+WKNN<T>::WKNN(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
   if(buildtree) build_tree();
 }
 
@@ -33,8 +33,8 @@ void WKNN<T>::delete_tree() {
 }
 
 template <typename T>
-List WKNN<T>::query(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > query, const int k, const double eps) {
   return queryD(query.template cast<T>().transpose(), k, eps);
+List WKNN<T>::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
 }
 
 template <typename T>
@@ -56,7 +56,7 @@ List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int
   indices.array()+=1;
   
   // transpose and unsquare distances for R
-  Eigen::Matrix<T, Dynamic, Dynamic> dists = dists2.cwiseSqrt().transpose();
+  Eigen::MatrixXd dists = dists2.cwiseSqrt().transpose().template cast<double>();
   
   return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
   Rcpp::Named("nn.dists")=dists);
@@ -65,7 +65,7 @@ List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int
 template <typename T>
 Eigen::MatrixXd WKNN<T>::getPoints() {
   // transpose for R
-  MatrixXd points = data_pts.transpose();
+  MatrixXd points = data_pts.transpose().template cast<double>();
   return points;
 }
 

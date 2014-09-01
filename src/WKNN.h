@@ -13,7 +13,7 @@ using namespace Eigen;
 template<typename T>
 struct WKNN {
   public:
-  WKNN(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > data, bool buildtree=true);
+  WKNN(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree=true);
   
   ~WKNN() { delete_tree(); }
   
@@ -21,7 +21,7 @@ struct WKNN {
 
   void delete_tree();
 
-  List query(const Eigen::Map<Eigen::Matrix<T, Dynamic, Dynamic> > query, const int k, const double eps=0.0);
+  List query(const Eigen::Map<Eigen::MatrixXd > query, const int k, const double eps=0.0);
   
   List queryWKNN(const WKNN& query, const int k, const double eps=0.0);
   
