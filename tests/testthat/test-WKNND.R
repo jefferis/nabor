@@ -23,7 +23,7 @@ test_that("Queries using WKNND objects", {
   w1=WKNND(p1)
   p2=kcpoints[[2]]
   w2=WKNND(p2)
-  expect_equal(w1$queryWKNND(w2$.CppObject, 1, 0), nn2(p1, p2, k=1))
+  expect_equal(w1$queryWKNN(w2$.CppObject, 1, 0), nn2(p1, p2, k=1))
 })
 
 test_that("equivalence of WKNND and knn, nn2 queries", {
@@ -38,19 +38,19 @@ test_that("equivalence of WKNND and knn, nn2 queries", {
   
   expect_equal(w1$query(p2, 5, 0), knnq12)
   expect_equal(w1$query(p2, 5, 0), nn2(p1, p2, k=5, eps=0))
-  expect_equal(w1$queryWKNND(w2$.CppObject, 5, 0), nn2(p1, p2, k=5, eps=0))
+  expect_equal(w1$queryWKNN(w2$.CppObject, 5, 0), nn2(p1, p2, k=5, eps=0))
   
   expect_equal(w1$query(p1, 5, 0), knnq11)
   expect_equal(w1$query(p1, 5, 0), nn2(p1, p1, k=5, eps=0))
-  expect_equal(w1$queryWKNND(w1$.CppObject, 5, 0), nn2(p1, p1, k=5, eps=0))
+  expect_equal(w1$queryWKNN(w1$.CppObject, 5, 0), nn2(p1, p1, k=5, eps=0))
   
   expect_equal(w2$query(p2, 5, 0), knnq22)
   expect_equal(w2$query(p2, 5, 0), nn2(p2, p2, k=5, eps=0))
-  expect_equal(w2$queryWKNND(w2$.CppObject, 5, 0), nn2(p2, p2, k=5, eps=0))
+  expect_equal(w2$queryWKNN(w2$.CppObject, 5, 0), nn2(p2, p2, k=5, eps=0))
 
   expect_equal(w2$query(p1, 5, 0), knnq21)
   expect_equal(w2$query(p1, 5, 0), nn2(p2, p1, k=5, eps=0))
-  expect_equal(w2$queryWKNND(w1$.CppObject, 5, 0), nn2(p2, p1, k=5, eps=0))
+  expect_equal(w2$queryWKNN(w1$.CppObject, 5, 0), nn2(p2, p1, k=5, eps=0))
   
   set.seed(42)
   d=matrix(rnorm(100*3), ncol=3)
