@@ -17,7 +17,7 @@ struct WKNN {
   
   ~WKNN() { delete_tree(); }
   
-  void build_tree(NNSearchD::SearchType treetype=NNSearchD::KDTREE_LINEAR_HEAP);
+  void build_tree(typename NearestNeighbourSearch<T>::SearchType treetype=NearestNeighbourSearch<T>::KDTREE_LINEAR_HEAP);
 
   void delete_tree();
 

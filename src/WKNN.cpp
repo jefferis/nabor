@@ -18,7 +18,7 @@ WKNN<T>::WKNN(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) 
 }
 
 template <typename T>
-void WKNN<T>::build_tree(NNSearchD::SearchType treetype) {
+void WKNN<T>::build_tree(typename NearestNeighbourSearch<T>::SearchType treetype) {
   if(tree==0) {
     tree = NearestNeighbourSearch<T>::create(data_pts, data_pts.rows(), treetype);
   }
@@ -49,7 +49,7 @@ List WKNN<T>::queryD(const Eigen::Matrix<T, Dynamic, Dynamic>& queryd, const int
   
   // build tree if required
   build_tree();
-  tree->knn(queryd, indices, dists2, k, eps, NNSearchD::SORT_RESULTS | NNSearchD::ALLOW_SELF_MATCH);
+  tree->knn(queryd, indices, dists2, k, eps, NearestNeighbourSearch<T>::SORT_RESULTS | NearestNeighbourSearch<T>::ALLOW_SELF_MATCH);
   
   // transpose and 1-index for R
   indices.transposeInPlace();
