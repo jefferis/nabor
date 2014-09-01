@@ -60,7 +60,7 @@ str(w1q2)
 wkcpoints <-lapply(kcpoints, WKNNF, FALSE)
 # query all 3 point sets against first
 # this will trigger tree construction only for pointset 1
-qall <- lapply(wkcpoints, function(x) wkcpoints[[1]]$queryWKNNF(x$.CppObject, k=5, eps=0))
+qall <- lapply(wkcpoints, function(x) wkcpoints[[1]]$queryWKNN(x$.CppObject, k=5, eps=0))
 str(qall)
 }
 \seealso{
