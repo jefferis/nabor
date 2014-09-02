@@ -5,7 +5,7 @@ Version: 0.4
 Date: 2014-09-02
 Author: Stephane Mangenat (for libnabo), Gregory Jefferis
 Maintainer: Gregory Jefferis <jefferis@gmail.com>
-Description: an R wrapper for libnabo, an exact or approximate k nearest
+Description: An R wrapper for libnabo, an exact or approximate k nearest
     neighbour library which is optimised for low dimensional spaces (e.g. 3D).
     libnabo has speed and space advantages over the ANN library wrapped by
     package RANN. nabor includes a knn function that is designed as a drop-in
