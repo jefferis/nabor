@@ -1,5 +1,10 @@
+nabor 0.4.1
+===========
+* CRAN release
+* insist on RcppEigen >= 0.3.2.2.0 (conservative but should not be restrictive)
+
 nabor 0.4
-========
+=========
 * corectly handle non-floating point input to knn (and note that WKNN classes 
   must be initialised with floating point input)
 * standardise method names of WKNN classes so that they are identical for WKNND
