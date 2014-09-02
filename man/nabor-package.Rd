@@ -4,12 +4,13 @@
 \alias{nabor-package}
 \title{Wrapper for libnabo K Nearest Neighbours C++ library}
 \description{
-R package **nabor** wraps the [libnabo](https://github.com/ethz-asl/libnabo),
-a fast K Nearest Neighbour library for low-dimensional spaces. The package
-provides both standalone functions (see \code{\link{knn}} for basic queries
-and also the option to produce an object containing the k-d tree search
-(\code{\link{WKNN}}) structure for making multiple queries against the same
-target points.
+R package \bold{nabor} wraps the
+\href{https://github.com/ethz-asl/libnabo}{libnabo} library, a fast K Nearest
+Neighbour library for low-dimensional spaces written in templated C++. The
+package provides both a standalone function (see \code{\link{knn}} for basic
+queries along an option to produce an object containing the k-d tree search
+(see \code{\link{WKNN}}) structure when making multiple queries against the
+same target points.
 }
 \details{
 libnabo uses the same approach as the ANN library (wrapped in R package
