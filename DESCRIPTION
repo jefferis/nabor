@@ -9,7 +9,9 @@ Description: an R wrapper for libnabo, an exact or approximate k nearest
     neighbour library which is optimised for low dimensional spaces (e.g. 3D).
     libnabo has speed and space advantages over the ANN library wrapped by
     package RANN. nabor includes a knn function that is designed as a drop-in
-    replacement for RANN::nn2.
+    replacement for RANN::nn2. In addition, objects which include the k-d tree
+    search structure can be returned to speed up repeated queries of the same
+    set of target points.
 License: BSD_3_clause + file LICENSE
 Copyright: libnabo is copyright 2010--2011, Stephane Magnenat, ASL, ETHZ,
     Switzerland <stephane at magnenat dot net>
