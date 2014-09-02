@@ -10,8 +10,7 @@ to be 5% to 20% faster with more compact data structures.
 ## Quick start
 ```r
 # install (see below for details)
-if (!require("devtools")) install.packages("devtools")
-devtools::install_github("jefferis/nabor")
+install.packages("nabor")
 
 # use
 library(nabor)
@@ -45,18 +44,24 @@ that can be used in R. See `?WKNN` for details. The `WKNNF` class has the additi
 feature of using floats (4 bytes per coordinate) for the underlying storage, rather
 than the doubles used by R; this may be useful for large pointsets.
 ## Installation
-Currently there isn't a released version on [CRAN](http://cran.r-project.org/)
-so you must install from source.
+### Released version from CRAN
+The current stable version of the package is available from 
+[CRAN](http://cran.r-project.org/). Since the package requires compilation, but
+installing from CRAN allows mac and windows users to avoid this by installing
+binary packages.
 
-### Prerequisites
-The **nabor** package is known to compile from source with the standard 
-toolchains for R under MacOS X, Windows and Linux.
-See http://www.rstudio.com/products/rpackages/devtools/ for details of the
+```r
+install.packages("nabor")
+```
+
+### Development version from github
+The **nabor** package is known to compile from source with the standard C(++) 
+compilertoolchains for R under MacOS X, Windows and Linux. See 
+http://www.rstudio.com/products/rpackages/devtools/ for details of the
 developer toolchains needed for your platform.
 
-### Bleeding Edge
-Once you have the prerequisites mentioned aboved you can use the **devtools**
-package to install the development version of the package:
+Once you have installed the appropriate developer toolchain mentioned aboved you
+can use the **devtools** package to install the development version of the package:
 
 ```r
 if (!require("devtools")) install.packages("devtools")
@@ -64,8 +69,9 @@ devtools::install_github("jefferis/nabor")
 ```
 ### Dependencies
 The **nabor** package includes libnabo and all of its dependencies (boost, via 
-package **BH**) and Eigen (via package **RcppEigen**) and therefore does not
-depend on any system libraries.
+package **BH**) and Eigen (via package **RcppEigen**) and does not
+depend on any non-standard system libraries. It should therefore run out of the
+box on any mac/linux/windows system.
 
 ## Acknowlegements
 **libnabo** and therefore the **nabor** R package are released under the 
