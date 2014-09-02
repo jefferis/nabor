@@ -8,10 +8,13 @@
 \alias{WKNNF-class}
 \title{Wrapper classes for k-NN searches enabling repeated queries of the same tree}
 \description{
-\code{WKNNF} and \code{WKNND} are reference classes that wrapp
+\code{WKNNF} and \code{WKNND} are reference classes that wrap
   C++ classes of the same name that include a space-efficient k-d tree along
   with the target data points. They have \code{query} methods with exactly
-  the same interface as the \code{knn} function.
+  the same interface as the \code{knn} function. One important point compared
+  with \code{knn} - they must be intialised with floating point data and you
+  are responsible for this - see \code{\link{storage.mode}}) and the example
+  below.
 }
 \details{
 \code{WKNNF} expects and returns matrices in R's standard (double, 8
@@ -49,6 +52,14 @@ w1q3 <- w1$query(kcpoints[[3]], k=5, eps=0)
 # built and queried.
 stopifnot(all.equal(knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, eps=0),
  w1q2, tolerance=1e-6))
+
+## storage mode: must be double
+m=matrix(1:24, ncol=3)
+storage.mode(m)
+# this will generate an error unless we change to a double
+w=tools::assertCondition(WKNND(m), "error")
+storage.mode(m)="double"
+w=WKNND(matrix(m, ncol=3))
 
 ## construct wrapper objects but delay tree construction
 w1 <- WKNNF(kcpoints[[1]], FALSE)
