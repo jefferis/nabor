@@ -59,11 +59,17 @@ knn <- function(data, query=data, k, eps = 0.0, searchtype=1L) {
     if(searchtype>4L || searchtype<1L) stop("Unknown search type!")
   }
   
-  # Check input points
+  # Check input points are matrices
   if(!is.matrix(data))
     data <- as.matrix(data, rownames.force = FALSE)
   if(!is.matrix(query))
     query <- as.matrix(query, rownames.force = FALSE)
+  
+  # check input points are floating point (otherwise Eigen/libnabo will complain)
+  if(storage.mode(data)!='double')
+    storage.mode(data)<-"double"
+  if(storage.mode(query)!='double')
+    storage.mode(query)<-"double"
 
   .Call('nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
 }
