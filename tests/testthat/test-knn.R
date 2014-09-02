@@ -34,6 +34,11 @@ test_that("knn with different input types",{
   expect_equal(knn(df, df, k=1), nn2(m, m, k=1))
   # matrix vs vector input for 1d case
   expect_equal(knn(m[,1, drop=FALSE], m[,2, drop=FALSE], k=1), knn(m[,1], m[,2], k=1))
+  
+  # integer data and query
+  expect_is(knn(matrix(1:24,ncol=3), matrix(1:6,ncol=3), k=1), "list")
+  # numeric data and integer query
+  expect_is(knn(matrix(as.numeric(1:24),ncol=3), matrix(1:6, ncol=3), k=1), "list")
 })
 
 test_that("nn2 with bad data", {
