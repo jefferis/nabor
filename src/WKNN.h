@@ -34,8 +34,6 @@ struct WKNN {
   NearestNeighbourSearch<T>* tree;
 };
 
-//typedef NearestNeighbourSearch<float> NNSearchF;
-	//! nearest neighbour search with scalars of type double
 typedef WKNN<double> WKNND;
 typedef WKNN<float> WKNNF;
 

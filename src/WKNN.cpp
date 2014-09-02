@@ -8,8 +8,6 @@ using namespace Rcpp;
 using namespace Nabo;
 using namespace Eigen;
 
-RCPP_EXPOSED_CLASS_NODECL(WKNND)
-
 template <typename T>
 WKNN<T>::WKNN(const Eigen::Map<Eigen::MatrixXd> data, bool buildtree) : tree(0) {
   data_pts = data.template cast<T>().transpose();
@@ -68,6 +66,7 @@ Eigen::MatrixXd WKNN<T>::getPoints() {
   return points;
 }
 
+RCPP_EXPOSED_CLASS_NODECL(WKNND)
 // Explicit template instantiation for linker
 template struct WKNN<double>;
 
