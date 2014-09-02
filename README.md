@@ -46,9 +46,8 @@ than the doubles used by R; this may be useful for large pointsets.
 ## Installation
 ### Released version from CRAN
 The current stable version of the package is available from 
-[CRAN](http://cran.r-project.org/). Since the package requires compilation, but
-installing from CRAN allows mac and windows users to avoid this by installing
-binary packages.
+[CRAN](http://cran.r-project.org/). The package requires compilation, but
+installing from CRAN allows mac and windows users without the full C++ compiler toolchain to install binary packages.
 
 ```r
 install.packages("nabor")
@@ -56,17 +55,18 @@ install.packages("nabor")
 
 ### Development version from github
 The **nabor** package is known to compile from source with the standard C(++) 
-compilertoolchains for R under MacOS X, Windows and Linux. See 
+compiler toolchains for R under MacOS X, Windows and Linux. See 
 http://www.rstudio.com/products/rpackages/devtools/ for details of the
 developer toolchains needed for your platform.
 
-Once you have installed the appropriate developer toolchain mentioned aboved you
+Once you have installed the appropriate developer toolchain mentioned above, you
 can use the **devtools** package to install the development version of the package:
 
 ```r
 if (!require("devtools")) install.packages("devtools")
 devtools::install_github("jefferis/nabor")
 ```
+
 ### Dependencies
 The **nabor** package includes libnabo and all of its dependencies (boost, via 
 package **BH**) and Eigen (via package **RcppEigen**) and does not
