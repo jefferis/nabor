@@ -16,6 +16,7 @@ License: BSD_3_clause + file LICENSE
 Copyright: libnabo is copyright 2010--2011, Stephane Magnenat, ASL, ETHZ,
     Switzerland <stephane at magnenat dot net>
 URL: https://github.com/jefferis/nabor https://github.com/ethz-asl/libnabo
+BugReports: https://github.com/jefferis/nabor/issues
 Depends:
     R (>= 3.0.2)
 Imports:
