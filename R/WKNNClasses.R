@@ -5,13 +5,14 @@
 #'   with the target data points. They have \code{query} methods with exactly 
 #'   the same interface as the \code{knn} function. One important point compared
 #'   with \code{knn} - they must be intialised with floating point data and you 
-#'   are responsible for this - see \code{\link{storage.mode}}) and the example
+#'   are responsible for this - see \code{\link{storage.mode}}) and the example 
 #'   below.
 #'   
 #' @details \code{WKNNF} expects and returns matrices in R's standard (double, 8
 #'   bytes) data type but uses floats internally. \code{WKNND} uses doubles 
-#'   throughout. When retaining large numbes of points, the \code{WKNNF} objects
-#'   will have a small memory saving, especially if tree building is delayed.
+#'   throughout. When retaining large numbers of points, the \code{WKNNF} 
+#'   objects will have a small memory saving, especially if tree building is 
+#'   delayed.
 #'   
 #'   The constructor for WKNN objects includes a logical flag indicating whether
 #'   to build the tree immediately (default: \code{TRUE}) or (when \code{FALSE})
@@ -24,9 +25,10 @@
 #'   makes sense to use \code{knn} in these circumstances.
 #'   
 #'   If you wish to make repeated queries of the same target data, then using 
-#'   \code{WKNN} objects can give significant advantages. You can obtain further
-#'   benefits in some cases by converting the query points into WKNNF objects 
-#'   without building the trees.
+#'   \code{WKNN} objects can give significant advantages. If you are going to 
+#'   make repeated queries with the same set of query points (presumably against
+#'   different target data), you can obtain benefits in some cases by converting
+#'   the query points into WKNNF objects without building the trees.
 #' @name WKNNF-class
 #' @aliases WKNN
 #' @rdname WKNN-class
