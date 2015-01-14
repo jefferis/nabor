@@ -1,6 +1,6 @@
 Package: nabor
 Type: Package
-Title: Wraps libnabo, a fast K Nearest Neighbour library for low dimensions
+Title: Wraps libnabo, a Fast K Nearest Neighbour Library for Low Dimensions
 Version: 0.4.4
 Date: 2015-01-12
 Author: Stephane Mangenat (for libnabo), Gregory Jefferis
