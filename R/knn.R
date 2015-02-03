@@ -11,9 +11,16 @@
 #'   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value 
 #'   between 1L and 4L.
 #'   
+#'   The underlying \href{https://github.com/ethz-asl/libnabo}{libnabo} does not
+#'   have a signalling value to identify indices for invalid query points (e.g. 
+#'   those containing an \code{NA}). In this situation, the index returned by 
+#'   libnabo will be 0 and \code{knn} will therefore return an index of 1. 
+#'   However the distance will be \code{Inf} signalling a failure to find a 
+#'   nearest neighbour.
+#'   
 #' @param data Mxd matrix of M target points with dimension d
 #' @param query Nxd matrix of N query points with dimension d (nb \code{data} 
-#'   and \code{query} must have same dimension). If missing defaults to
+#'   and \code{query} must have same dimension). If missing defaults to 
 #'   \code{data} i.e. a self-query.
 #' @param k an integer number of nearest neighbours to find
 #' @param eps An approximate error bound. The default of 0 implies exact 
@@ -21,7 +28,8 @@
 #' @param searchtype A character vector or integer indicating the search type. 
 #'   The default value of \code{1L} is equivalent to "auto". See details.
 #' @return A list with elements \code{nn.idx} (1-indexed indices) and 
-#'   \code{nn.dists} (distances), both of which are N x k matrices
+#'   \code{nn.dists} (distances), both of which are N x k matrices. See details
+#'   for the results obtained with1 invalid inputs.
 #' @export
 #' @examples
 #' ## Basic usage

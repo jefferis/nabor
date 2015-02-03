@@ -22,7 +22,8 @@ The default value of \code{1L} is equivalent to "auto". See details.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and
-  \code{nn.dists} (distances), both of which are N x k matrices
+  \code{nn.dists} (distances), both of which are N x k matrices. See details
+  for the results obtained with1 invalid inputs.
 }
 \description{
 Find K nearest neighbours for multiple query points
@@ -38,6 +39,13 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   Integer values of searchtype should be the 1-indexed position in the vector
   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value
   between 1L and 4L.
+
+  The underlying \href{https://github.com/ethz-asl/libnabo}{libnabo} does not
+  have a signalling value to identify indices for invalid query points (e.g.
+  those containing an \code{NA}). In this situation, the index returned by
+  libnabo will be 0 and \code{knn} will therefore return an index of 1.
+  However the distance will be \code{Inf} signalling a failure to find a
+  nearest neighbour.
 }
 \examples{
 ## Basic usage
