@@ -1,3 +1,8 @@
+nabor 0.4.5
+===========
+* document behaviour for invalid input points to knn
+  (thanks to @cmpop1, see https://github.com/jefferis/nabor/issues/3)
+
 nabor 0.4.4
 ===========
 * fixes warning for non-portable Makefile (thanks to Brian Ripley)
