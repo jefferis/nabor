@@ -1,17 +1,17 @@
 Package: nabor
 Type: Package
-Title: Wraps libnabo, a Fast K Nearest Neighbour Library for Low Dimensions
 Version: 0.4.5
 Date: 2015-02-03
-Author: Stephane Mangenat (for libnabo), Gregory Jefferis
+Title: Wraps 'libnabo', a Fast K Nearest Neighbour Library for Low Dimensions
+Author: Stephane Mangenat (for 'libnabo'), Gregory Jefferis
 Maintainer: Gregory Jefferis <jefferis@gmail.com>
-Description: An R wrapper for libnabo, an exact or approximate k nearest
+Description: An R wrapper for 'libnabo', an exact or approximate k nearest
     neighbour library which is optimised for low dimensional spaces (e.g. 3D).
-    libnabo has speed and space advantages over the ANN library wrapped by
-    package RANN. nabor includes a knn function that is designed as a drop-in
-    replacement for RANN::nn2. In addition, objects which include the k-d tree
-    search structure can be returned to speed up repeated queries of the same
-    set of target points.
+    'libnabo' has speed and space advantages over the 'ANN' library wrapped by
+    package 'RANN'. 'nabor' includes a knn function that is designed as a 
+    drop-in replacement for 'RANN' function nn2. In addition, objects which 
+    include the k-d tree search structure can be returned to speed up repeated 
+    queries of the same set of target points.
 License: BSD_3_clause + file LICENSE
 Copyright: libnabo is copyright 2010--2011, Stephane Magnenat, ASL, ETHZ,
     Switzerland <stephane at magnenat dot net>
