@@ -10,18 +10,14 @@ using namespace Rcpp;
 List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps);
 RcppExport SEXP nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< int >::type st(stSEXP );
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type data(dataSEXP );
-        Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type query(querySEXP );
-        Rcpp::traits::input_parameter< const int >::type k(kSEXP );
-        Rcpp::traits::input_parameter< const double >::type eps(epsSEXP );
-        List __result = knn_generic(st, data, query, k, eps);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< int >::type st(stSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type data(dataSEXP);
+    Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type query(querySEXP);
+    Rcpp::traits::input_parameter< const int >::type k(kSEXP);
+    Rcpp::traits::input_parameter< const double >::type eps(epsSEXP);
+    __result = Rcpp::wrap(knn_generic(st, data, query, k, eps));
+    return __result;
 END_RCPP
 }
