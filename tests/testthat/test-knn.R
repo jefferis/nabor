@@ -21,10 +21,12 @@ test_that('different knn search types agree',{
   expect_equal(knn(d, q, k=5), knn(d, q, k=5, searchtype='kd_tree_heap'))
 })
 
-library(RANN)
+
 test_that('knn and RANN:nn2 agree',{
-  expect_equal(knn(d, q, k=5), nn2(data=d, query=q, k=5))
-  expect_equal(knn(d, k=5), nn2(data=d, k=5))
+  if(require('RANN')){
+    expect_equal(knn(d, q, k=5), nn2(data=d, query=q, k=5))
+    expect_equal(knn(d, k=5), nn2(data=d, k=5))
+  }
 })
 
 
