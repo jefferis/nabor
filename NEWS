@@ -1,3 +1,9 @@
+nabor 0.4.6
+===========
+* make RANN test conditional
+* Fix description for R 3.2.0
+* roxygen2/Rcpp updates
+
 nabor 0.4.5
 ===========
 * document behaviour for invalid input points to knn
