@@ -1,21 +1,31 @@
 ## Test environments
-* local OS X install, R 3.1.2
-* ubuntu 12.04 (on travis-ci), R 3.1.2
-* win-builder (devel and release)
+* local OS X install, R 3.2.0
+* ubuntu 12.04 (on travis-ci), R 3.2.0
+* winbuilder (devel and release)
 
 ## R CMD check results
-There were no ERRORs or WARNINGs. 
+There were no ERRORs or WARNINGs on any platform.
 
-There was 1 NOTE:
+There was 1 NOTE on winbuilder release, relating to two issues:
 
-* checking dependencies in R code ... NOTE
-  Namespace in Imports field not imported from: 'R6'
+1. Possibly mis-spelled words in DESCRIPTION:
+  knn (11:40)
+  nn (12:45)
 
-  R6 is a build-time dependency.
+These seem acceptable to me.
+
+2. The Title field should be in title case, current version then in title case:
+'Wraps 'libnabo', a Fast K Nearest Neighbour Library for Low Dimensions'
+'Wraps 'Libnabo', a Fast K Nearest Neighbour Library for Low Dimensions'
+
+This seems to be a false positive where the comma after the closing single quote
+of 'libnabo', confuses tools::toTitleCase. Compare:
+
+```
+tools::toTitleCase("'libnabo'")
+tools::toTitleCase("'libnabo',")
+```
 
 ## Downstream dependencies
-I have also run R CMD check on downstream dependencies of httr 
-(https://github.com/wch/checkresults/blob/master/httr/r-release). All packages 
-that I could install passed except:
-
-* XYZ:...
+I have also run R CMD check on downstream dependencies of nat. All packages 
+passed.
