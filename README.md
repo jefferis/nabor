@@ -1,5 +1,5 @@
 # nabor
-[![Release Version](https://badge.fury.io/gh/jefferis%2Fnabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
+[![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](http://cran.r-project.org/web/packages/nabor) 
 [![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
 
