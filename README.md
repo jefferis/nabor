@@ -1,4 +1,5 @@
 # nabor
+[![DOI](https://zenodo.org/badge/4241/jefferis/nabor.svg)](http://dx.doi.org/10.5281/zenodo.17873) 
 [![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](http://cran.r-project.org/web/packages/nabor) 
 [![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
