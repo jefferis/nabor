@@ -1,13 +1,13 @@
 # nabor
 [![DOI](https://zenodo.org/badge/4241/jefferis/nabor.svg)](http://dx.doi.org/10.5281/zenodo.17873) 
 [![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](http://cran.r-project.org/web/packages/nabor) 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](https://cran.r-project.org/package=nabor) 
 [![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
 
 R package **nabor** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
 a fast K Nearest Neighbour library for low-dimensional spaces implemented in templated C++.
 In comparison with the widely used [ANN](http://www.cs.umd.edu/~mount/ANN) library (wrapped by the
-[RANN](http://cran.r-project.org/web/packages/RANN/index.html) R package), **libnabo** is reported
+[RANN](https://cran.r-project.org/package=RANN) R package), **libnabo** is reported
 to be 5% to 20% faster with more compact data structures.
 
 ## Quick start
@@ -36,7 +36,7 @@ citation("nabor")
 
 ## nabor vs RANN
 For R users **nabor** provides a function, `knn`, that is a drop in replacement for
-the `nn2` function in the [RANN](http://cran.r-project.org/web/packages/RANN/index.html) 
+the `nn2` function in the [RANN](https://cran.r-project.org/package=RANN) 
 R package. I have seen speedups of 2-3x fold for queries of interest (a few thousand
 points in 3d, k=1) when comparing nabor::knn and RANN::nn2. See `?knn` for details.
 
@@ -49,7 +49,7 @@ than the doubles used by R; this may be useful for large pointsets.
 ## Installation
 ### Released version from CRAN
 The current stable version of the package is available from 
-[CRAN](http://cran.r-project.org/). The package requires compilation, but
+[CRAN](https://cran.r-project.org/). The package requires compilation, but
 installing from CRAN allows mac and windows users without the full C++ compiler toolchain to install binary packages.
 
 ```r
@@ -59,7 +59,7 @@ install.packages("nabor")
 ### Development version from github
 The **nabor** package is known to compile from source with the standard C(++) 
 compiler toolchains for R under MacOS X, Windows and Linux. See 
-http://www.rstudio.com/products/rpackages/devtools/ for details of the
+https://www.rstudio.com/products/rpackages/devtools/ for details of the
 developer toolchains needed for your platform.
 
 Once you have installed the appropriate developer toolchain mentioned above, you
@@ -78,7 +78,7 @@ box on any mac/linux/windows system.
 
 ## Acknowlegements
 **libnabo** and therefore the **nabor** R package are released under the 
-[BSD 3 clause license](http://www.r-project.org/Licenses/BSD_3_clause). If you
+[BSD 3 clause license](https://www.r-project.org/Licenses/BSD_3_clause). If you
 make use of **nabor** please cite the original authors:
 
 ```
@@ -103,6 +103,6 @@ A BibTeX entry for LaTeX users is
 
 ```
 
-**nabor** also makes use of the tremendous [Rcpp](http://cran.r-project.org/web/packages/Rcpp/index.html)
-and [RcppEigen](http://cran.r-project.org/web/packages/RcppEigen/index.html) packages –
+**nabor** also makes use of the tremendous [Rcpp](https://cran.r-project.org/package=Rcpp)
+and [RcppEigen](https://cran.r-project.org/package=RcppEigen) packages –
 kudos to their authors!
