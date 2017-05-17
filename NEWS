@@ -1,3 +1,8 @@
+nabor 0.4.7
+===========
+* dev: register native routines as recommended for R 3.4.0
+* dev: update travis 
+
 nabor 0.4.6
 ===========
 * make RANN test conditional

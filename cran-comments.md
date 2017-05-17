@@ -1,33 +1,24 @@
+This update addresses the note on the current CRAN build relating to 
+registration of native routines as well as fixing some README URLs.
+
 ## Test environments
-* local OS X install, R 3.2.0
+* local OS X install, R 3.4.0
 * ubuntu 12.04 (on travis-ci), R 3.2.0
-* winbuilder (devel and release)
+* winbuilder (devel)
 
 ## R CMD check results
 There were no ERRORs or WARNINGs on any platform.
 
-There was 1 NOTE on win-builder release, relating to two issues:
+There was 1 NOTE on win-builder release, relating to one issue:
 
-http://win-builder.r-project.org/J3C38xF8CKYt/00check.log
+https://win-builder.r-project.org/ypZ5XoozA8Pt/00check.log
 
-1. Possibly mis-spelled words in DESCRIPTION:
+Possibly mis-spelled words in DESCRIPTION:
   knn (11:40)
   nn (12:45)
 
 These seem acceptable to me.
 
-2. The Title field should be in title case, current version then in title case:
-'Wraps 'libnabo', a Fast K Nearest Neighbour Library for Low Dimensions'
-'Wraps 'Libnabo', a Fast K Nearest Neighbour Library for Low Dimensions'
-
-This seems to be a false positive where the comma after the closing single quote
-of 'libnabo', confuses tools::toTitleCase. Compare:
-
-```
-tools::toTitleCase("'libnabo'")
-tools::toTitleCase("'libnabo',")
-```
-
 ## Downstream dependencies
-I have also run R CMD check on downstream dependencies of nat. All packages 
+I have also run R CMD check on downstream dependencies of nabor. All packages 
 passed.
