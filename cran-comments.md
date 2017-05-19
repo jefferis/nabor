@@ -21,4 +21,4 @@ These seem acceptable to me.
 
 ## Downstream dependencies
 I have also run R CMD check on downstream dependencies of nabor. All packages 
-passed.
+passed (although stplanr had an unrelated NOTE).
