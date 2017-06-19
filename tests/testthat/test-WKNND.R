@@ -18,7 +18,14 @@ test_that("Basic queries", {
   expect_equal(w1.notree$query(p2, 1, 0, 0), w1$query(p2, 1, 0, 0))
   
   # queries with radius limit
-  expect_equal(w1$query(p2, 1, 0, 15.0), nn2(p1, p2, k=1, radius=15.0, searchtype = 'radius'))
+  res1=w1$query(p2, 1, 0, 15.0)
+  res2=nn2(p1, p2, k=1, radius=15.0, searchtype = 'radius')
+  res1f=res1$nn.idx!=0
+  res2f=res2$nn.idx!=0
+  
+  expect_equal(res1f, res2f)
+  expect_equal(res1$nn.dists[res1f], res2$nn.dists[res2f])
+  expect_equal(res1$nn.idx[res1f], res2$nn.idx[res2f])
 })
 
 test_that("Queries using WKNND objects", {
