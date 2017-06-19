@@ -7,8 +7,8 @@
 using namespace Rcpp;
 
 // knn_generic
-List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps);
-RcppExport SEXP nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP) {
+List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps, const double radius);
+RcppExport SEXP nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP, SEXP radiusSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
@@ -17,7 +17,8 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< const Eigen::Map<Eigen::MatrixXd> >::type query(querySEXP);
     Rcpp::traits::input_parameter< const int >::type k(kSEXP);
     Rcpp::traits::input_parameter< const double >::type eps(epsSEXP);
-    rcpp_result_gen = Rcpp::wrap(knn_generic(st, data, query, k, eps));
+    Rcpp::traits::input_parameter< const double >::type radius(radiusSEXP);
+    rcpp_result_gen = Rcpp::wrap(knn_generic(st, data, query, k, eps, radius));
     return rcpp_result_gen;
 END_RCPP
 }

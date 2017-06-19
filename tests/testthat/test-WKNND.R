@@ -16,6 +16,9 @@ test_that("Basic queries", {
   expect_equal(w1$query(p2, 1, 0, 0), nn2(p1, p2, k=1))
   w1.notree<-WKNND(p1,FALSE)
   expect_equal(w1.notree$query(p2, 1, 0, 0), w1$query(p2, 1, 0, 0))
+  
+  # queries with radius limit
+  expect_equal(w1$query(p2, 1, 0, 15.0), nn2(p1, p2, k=1, radius=15.0, searchtype = 'radius'))
 })
 
 test_that("Queries using WKNND objects", {

@@ -4,7 +4,7 @@
 \alias{knn}
 \title{Find K nearest neighbours for multiple query points}
 \usage{
-knn(data, query = data, k, eps = 0, searchtype = 1L)
+knn(data, query = data, k, eps = 0, searchtype = 1L, radius = 0)
 }
 \arguments{
 \item{data}{Mxd matrix of M target points with dimension d}
@@ -20,6 +20,9 @@ matching.}
 
 \item{searchtype}{A character vector or integer indicating the search type. 
 The default value of \code{1L} is equivalent to "auto". See details.}
+
+\item{radius}{Maximum radius search bound. The default of 0 implies no radius
+bound.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and 
@@ -47,6 +50,10 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   libnabo will be 0 and \code{knn} will therefore return an index of 1. 
   However the distance will be \code{Inf} signalling a failure to find a 
   nearest neighbour.
+  
+  When radius>0.0 and no point is found within the search bound, the index 
+  returned will be 0 but the reported distance will be Inf (in contrast 
+  RANN::nn2 returns 1.340781e+154).
 }
 \examples{
 ## Basic usage

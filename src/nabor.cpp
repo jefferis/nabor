@@ -11,7 +11,8 @@ using namespace Eigen;
 #include "WKNN.h"
 
 // [[Rcpp::export]]
-List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
+List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query,
+                 const int k, const double eps, const double radius) {
   
   // create WKNND object but don't build tree
   WKNND tree = WKNND(data, false);
@@ -29,5 +30,5 @@ List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Ma
   // build tree using appropriate search type
   tree.build_tree(nabo_st);
   
-  return tree.query(query, k, eps);
+  return tree.query(query, k, eps, radius);
 }
