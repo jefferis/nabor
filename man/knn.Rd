@@ -4,7 +4,7 @@
 \alias{knn}
 \title{Find K nearest neighbours for multiple query points}
 \usage{
-knn(data, query = data, k, eps = 0, searchtype = 1L)
+knn(data, query = data, k, eps = 0, searchtype = 1L, radius = 0)
 }
 \arguments{
 \item{data}{Mxd matrix of M target points with dimension d}
@@ -20,6 +20,9 @@ matching.}
 
 \item{searchtype}{A character vector or integer indicating the search type. 
 The default value of \code{1L} is equivalent to "auto". See details.}
+
+\item{radius}{Maximum radius search bound. The default of 0 implies no radius
+bound.}
 }
 \value{
 A list with elements \code{nn.idx} (1-indexed indices) and 
@@ -47,30 +50,44 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   libnabo will be 0 and \code{knn} will therefore return an index of 1. 
   However the distance will be \code{Inf} signalling a failure to find a 
   nearest neighbour.
+  
+  When radius>0.0 and no point is found within the search bound, the index 
+  returned will be 0 but the reported distance will be Inf (in contrast 
+  RANN::nn2 returns 1.340781e+154).
 }
 \examples{
 ## Basic usage
 # load sample data consisting of list of 3 separate 3d pointets
 data(kcpoints)
+
 # Nearest neighbour in first pointset of all points in second pointset 
 nn1 <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1)
 str(nn1)
+
 # 5 nearest neighbours
 nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
 str(nn5)
+
 # Self match within first pointset, all distances will be 0
 nnself1 <- knn(data=kcpoints[[1]], k=1)
 str(nnself1)
+
 # neighbour 2 will be the nearest point 
 nnself2 <- knn(data=kcpoints[[1]], k=2)
 
 ## Advanced usage
-# nearest neighbour with 10\% error bound
+# nearest neighbour with radius bound
+nn1.rad <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, radius=5)
+str(nn1.rad)
+
+# approximate nearest neighbour with 10\% error bound
 nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
 str(nn1.approx)
+
 # 5 nearest neighbours, brute force search
 nn5.b <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype='brute')
 stopifnot(all.equal(nn5.b, nn5))
+
 # 5 nearest neighbours, brute force search (specified by int)
 nn5.b2 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype=2L)
 stopifnot(all.equal(nn5.b2, nn5.b))

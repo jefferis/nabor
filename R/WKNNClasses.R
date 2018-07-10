@@ -41,13 +41,14 @@
 #' data(kcpoints)
 #' # build a tree and query it with two different sets of points
 #' w1 <- WKNNF(kcpoints[[1]])
-#' w1q2 <- w1$query(kcpoints[[2]], k=5, eps=0)
+#' w1q2 <- w1$query(kcpoints[[2]], k=5, eps=0, radius=0)
 #' str(w1q2)
-#' w1q3 <- w1$query(kcpoints[[3]], k=5, eps=0)
+#' w1q3 <- w1$query(kcpoints[[3]], k=5, eps=0, radius=0)
 #' # note that there will be small difference between WKNNF and knn due to loss 
 #' # of precision in the double to float conversion when a WKNNF tree is 
 #' # built and queried.
-#' stopifnot(all.equal(knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, eps=0),
+#' stopifnot(all.equal(
+#'  knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, eps=0, radius=0),
 #'  w1q2, tolerance=1e-6))
 #'  
 #' ## storage mode: must be double
@@ -61,14 +62,15 @@
 #' ## construct wrapper objects but delay tree construction
 #' w1 <- WKNNF(kcpoints[[1]], FALSE)
 #' # query triggers tree construction
-#' w1q2 <- w1$query(kcpoints[[2]], k=5, eps=0)
+#' w1q2 <- w1$query(kcpoints[[2]], k=5, eps=0, radius=0)
 #' str(w1q2)
 #' 
 #' ## queries using wrapper objects
 #' wkcpoints <-lapply(kcpoints, WKNNF, FALSE)
 #' # query all 3 point sets against first
 #' # this will trigger tree construction only for pointset 1
-#' qall <- lapply(wkcpoints, function(x) wkcpoints[[1]]$queryWKNN(x$.CppObject, k=5, eps=0))
+#' qall <- lapply(wkcpoints, 
+#'   function(x) wkcpoints[[1]]$queryWKNN(x$.CppObject, k=5, eps=0, radius=0))
 #' str(qall)
 WKNNF <- setRcppClass("WKNNF")
 

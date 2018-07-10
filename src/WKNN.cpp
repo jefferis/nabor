@@ -30,23 +30,25 @@ void WKNN<T>::delete_tree() {
 }
 
 template <typename T>
-List WKNN<T>::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps) {
-  return queryT(query.template cast<T>().transpose(), k, eps);
+List WKNN<T>::query(const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps, const double radius) {
+  return queryT(query.template cast<T>().transpose(), k, eps, radius);
 }
 
 template <typename T>
-List WKNN<T>::queryWKNN(const WKNN& query, const int k, const double eps) {
-  return queryT(query.data_pts, k, eps);
+List WKNN<T>::queryWKNN(const WKNN& query, const int k, const double eps, const double radius) {
+  return queryT(query.data_pts, k, eps, radius);
 }
 
 template <typename T>
-List WKNN<T>::queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps) {
+List WKNN<T>::queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps, const double radius) {
   MatrixXi indices(k, queryT.cols());
   Eigen::Matrix<T, Dynamic, Dynamic> dists2(k, queryT.cols());
   
   // build tree if required
   build_tree();
-  tree->knn(queryT, indices, dists2, k, eps, NearestNeighbourSearch<T>::SORT_RESULTS | NearestNeighbourSearch<T>::ALLOW_SELF_MATCH);
+  
+  tree->knn(queryT, indices, dists2, k, eps, NearestNeighbourSearch<T>::SORT_RESULTS | NearestNeighbourSearch<T>::ALLOW_SELF_MATCH,
+            radius==0.0?std::numeric_limits<T>::infinity():radius);
   
   // transpose and 1-index for R
   indices.transposeInPlace();
@@ -55,8 +57,17 @@ List WKNN<T>::queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int
   // transpose and unsquare distances for R
   Eigen::MatrixXd dists = dists2.cwiseSqrt().transpose().template cast<double>();
   
+  if(radius>0.0) {
+    for(int i=0; i<dists.rows();i++){
+      for(int j=0; j<dists.cols();j++){
+        if(!std::isfinite(dists(i,j))){
+          indices(i,j)=0L;
+        }
+      }
+    }
+  }
   return Rcpp::List::create(Rcpp::Named("nn.idx")=indices,
-  Rcpp::Named("nn.dists")=dists);
+    Rcpp::Named("nn.dists")=dists);
 }
 
 template <typename T>

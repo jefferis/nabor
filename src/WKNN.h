@@ -21,11 +21,11 @@ struct WKNN {
 
   void delete_tree();
 
-  List query(const Eigen::Map<Eigen::MatrixXd > query, const int k, const double eps=0.0);
+  List query(const Eigen::Map<Eigen::MatrixXd > query, const int k, const double eps=0.0, const double radius=0.0);
   
-  List queryWKNN(const WKNN& query, const int k, const double eps=0.0);
+  List queryWKNN(const WKNN& query, const int k, const double eps=0.0, const double radius=0.0);
   
-  List queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps=0.0);
+  List queryT(const Eigen::Matrix<T, Dynamic, Dynamic>& queryT, const int k, const double eps=0.0, const double radius=0.0);
   
   Eigen::MatrixXd getPoints();
   

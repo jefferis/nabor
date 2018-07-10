@@ -18,6 +18,10 @@
 #'   However the distance will be \code{Inf} signalling a failure to find a 
 #'   nearest neighbour.
 #'   
+#'   When radius>0.0 and no point is found within the search bound, the index 
+#'   returned will be 0 but the reported distance will be Inf (in contrast 
+#'   RANN::nn2 returns 1.340781e+154).
+#'   
 #' @param data Mxd matrix of M target points with dimension d
 #' @param query Nxd matrix of N query points with dimension d (nb \code{data} 
 #'   and \code{query} must have same dimension). If missing defaults to 
@@ -25,6 +29,8 @@
 #' @param k an integer number of nearest neighbours to find
 #' @param eps An approximate error bound. The default of 0 implies exact 
 #'   matching.
+#' @param radius Maximum radius search bound. The default of 0 implies no radius
+#'   bound.
 #' @param searchtype A character vector or integer indicating the search type. 
 #'   The default value of \code{1L} is equivalent to "auto". See details.
 #' @return A list with elements \code{nn.idx} (1-indexed indices) and 
@@ -35,29 +41,39 @@
 #' ## Basic usage
 #' # load sample data consisting of list of 3 separate 3d pointets
 #' data(kcpoints)
+#' 
 #' # Nearest neighbour in first pointset of all points in second pointset 
 #' nn1 <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1)
 #' str(nn1)
+#' 
 #' # 5 nearest neighbours
 #' nn5 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5)
 #' str(nn5)
+#' 
 #' # Self match within first pointset, all distances will be 0
 #' nnself1 <- knn(data=kcpoints[[1]], k=1)
 #' str(nnself1)
+#' 
 #' # neighbour 2 will be the nearest point 
 #' nnself2 <- knn(data=kcpoints[[1]], k=2)
 #' 
 #' ## Advanced usage
-#' # nearest neighbour with 10% error bound
+#' # nearest neighbour with radius bound
+#' nn1.rad <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, radius=5)
+#' str(nn1.rad)
+#' 
+#' # approximate nearest neighbour with 10% error bound
 #' nn1.approx <- knn(data=kcpoints[[1]], query=kcpoints[[2]], k=1, eps=0.1)
 #' str(nn1.approx)
+#' 
 #' # 5 nearest neighbours, brute force search
 #' nn5.b <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype='brute')
 #' stopifnot(all.equal(nn5.b, nn5))
+#' 
 #' # 5 nearest neighbours, brute force search (specified by int)
 #' nn5.b2 <-knn(data=kcpoints[[1]], query=kcpoints[[2]], k=5, searchtype=2L)
 #' stopifnot(all.equal(nn5.b2, nn5.b))
-knn <- function(data, query=data, k, eps = 0.0, searchtype=1L) {
+knn <- function(data, query=data, k, eps = 0.0, searchtype=1L, radius=0.0) {
   if(is.character(searchtype)) {
     if(length(searchtype)!=1) stop("only 1 searchtype permitted!")
     search_choices=c("auto", "brute", "kd_linear_heap", "kd_tree_heap")
@@ -78,6 +94,9 @@ knn <- function(data, query=data, k, eps = 0.0, searchtype=1L) {
     storage.mode(data)<-"double"
   if(storage.mode(query)!='double')
     storage.mode(query)<-"double"
-
-  .Call('_nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
+  
+  if(radius<0)
+    stop("radius must be >=0.0!")
+  
+  .Call('_nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps, radius)
 }
