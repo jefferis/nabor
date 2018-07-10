@@ -98,5 +98,5 @@ knn <- function(data, query=data, k, eps = 0.0, searchtype=1L, radius=0.0) {
   if(radius<0)
     stop("radius must be >=0.0!")
   
-  .Call('nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps, radius)
+  .Call('_nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps, radius)
 }
