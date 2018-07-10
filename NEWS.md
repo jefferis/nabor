@@ -1,3 +1,8 @@
+# nabor 0.5.0
+
+* add radius bounded search (#6, #7)
+* remove register keyword from C++ libnabo (#9)
+
 # nabor 0.4.7
 
 * dev: register native routines as recommended for R 3.4.0

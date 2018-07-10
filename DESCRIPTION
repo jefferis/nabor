@@ -1,7 +1,7 @@
 Package: nabor
 Type: Package
 Title: Wraps 'libnabo', a Fast K Nearest Neighbour Library for Low Dimensions
-Version: 0.4.9.99
+Version: 0.5.0
 Author: Stephane Mangenat (for 'libnabo'), Gregory Jefferis
 Maintainer: Gregory Jefferis <jefferis@gmail.com>
 Description: An R wrapper for 'libnabo', an exact or approximate k nearest
