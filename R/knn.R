@@ -79,5 +79,5 @@ knn <- function(data, query=data, k, eps = 0.0, searchtype=1L) {
   if(storage.mode(query)!='double')
     storage.mode(query)<-"double"
 
-  .Call('nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
+  .Call('_nabor_knn_generic', PACKAGE = 'nabor', searchtype, data, query, k, eps)
 }

@@ -8,7 +8,7 @@ using namespace Rcpp;
 
 // knn_generic
 List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps);
-RcppExport SEXP nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP) {
+RcppExport SEXP _nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
