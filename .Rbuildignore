@@ -4,3 +4,4 @@
 ^.*\.bib$
 ^cran-comments\.md$
 ^revdep$
+^\.github$
