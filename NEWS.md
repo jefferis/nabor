@@ -1,3 +1,7 @@
+# nabor 0.5.1
+
+* pkgdown docs and other doc tweaks
+
 # nabor 0.5.0
 
 * add radius bounded search (#6, #7)

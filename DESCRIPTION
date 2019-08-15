@@ -2,7 +2,7 @@ Type: Package
 Package: nabor
 Title: Wraps 'libnabo', a Fast K Nearest Neighbour Library for
     Low Dimensions
-Version: 0.5.0
+Version: 0.5.1
 Authors@R: c(
     person("Gregory","Jefferis", email="jefferis@gmail.com", 
     role = c("aut", "cre", "cph"), comment = c(ORCID = "0000-0002-0587-9355")),
