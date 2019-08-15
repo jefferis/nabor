@@ -1,8 +1,12 @@
 # nabor
-[![DOI](https://zenodo.org/badge/4241/jefferis/nabor.svg)](http://dx.doi.org/10.5281/zenodo.17873) 
-[![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
+<!-- badges: start -->
+[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](https://cran.r-project.org/package=nabor) 
-[![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor) 
+[![DOI](https://zenodo.org/badge/23437339.svg)](https://zenodo.org/badge/latestdoi/23437339)
+[![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
+[![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor)
+[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://jefferis.github.io/nabor/reference/)
+<!-- badges: end -->
 
 R package **nabor** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
 a fast K Nearest Neighbour library for low-dimensional spaces implemented in templated C++.
