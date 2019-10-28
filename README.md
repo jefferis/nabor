@@ -6,6 +6,7 @@
 [![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
 [![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor)
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://jefferis.github.io/nabor/reference/)
+[![Downloads](http://cranlogs.r-pkg.org/badges/nabor?color=brightgreen)](http://www.r-pkg.org/pkg/nabor)
 <!-- badges: end -->
 
 R package **nabor** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
