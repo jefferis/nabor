@@ -36,4 +36,4 @@ LinkingTo:
 Copyright: libnabo is copyright 2010--2011, Stephane Magnenat,
     ASL, ETHZ, Switzerland <stephane at magnenat dot net>
 Encoding: UTF-8
-RoxygenNote: 7.1.0
+RoxygenNote: 7.3.2

@@ -6,6 +6,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // knn_generic
 List knn_generic(int st, const Eigen::Map<Eigen::MatrixXd> data, const Eigen::Map<Eigen::MatrixXd> query, const int k, const double eps, const double radius);
 RcppExport SEXP _nabor_knn_generic(SEXP stSEXP, SEXP dataSEXP, SEXP querySEXP, SEXP kSEXP, SEXP epsSEXP, SEXP radiusSEXP) {
