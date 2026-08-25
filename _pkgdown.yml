@@ -1,1 +1,3 @@
-destination: docs
+url: https://jefferis.github.io/nabor/
+template:
+  bootstrap: 5
