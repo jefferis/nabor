@@ -6,7 +6,7 @@
 \title{Wrapper for libnabo K Nearest Neighbours C++ library}
 \description{
 R package \bold{nabor} wraps the 
-\href{https://github.com/ethz-asl/libnabo}{libnabo} library, a fast K Nearest
+\href{https://github.com/norlab-ulaval/libnabo}{libnabo} library, a fast K Nearest
 Neighbour library for low-dimensional spaces written in templated C++. The 
 package provides both a standalone function (see \code{\link{knn}} for basic 
 queries along an option to produce an object containing the k-d tree search

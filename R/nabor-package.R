@@ -1,7 +1,7 @@
 #' Wrapper for libnabo K Nearest Neighbours C++ library
 #' 
 #' R package \bold{nabor} wraps the 
-#' \href{https://github.com/ethz-asl/libnabo}{libnabo} library, a fast K Nearest
+#' \href{https://github.com/norlab-ulaval/libnabo}{libnabo} library, a fast K Nearest
 #' Neighbour library for low-dimensional spaces written in templated C++. The 
 #' package provides both a standalone function (see \code{\link{knn}} for basic 
 #' queries along an option to produce an object containing the k-d tree search
@@ -29,8 +29,8 @@ NULL
 #' List of 3 matrices containing 3D points from Drosophila neurons
 #'
 #' This R list contains 3 skeletonized \emph{Drosophila} Kenyon cells as
-#' \code{dotprops} objects. Original data is due to Chiang et al. 2011, who have
-#' generously shared their raw data at \url{http://flycircuit.tw}. Image
+#' \code{dotprops} objects. Original data is due to Chiang et al. 2011 and was
+#' shared through the FlyCircuit project. Image
 #' registration and further processing was carried out by Greg Jefferis.
 #' @name kcpoints
 #' @docType data

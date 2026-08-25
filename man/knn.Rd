@@ -44,7 +44,7 @@ If \code{searchtype="auto"}, the default, knn uses a k-d tree with a
   \code{c("auto", "brute", "kd_linear_heap", "kd_tree_heap")}, i.e. a value 
   between 1L and 4L.
   
-  The underlying \href{https://github.com/ethz-asl/libnabo}{libnabo} does not
+  The underlying \href{https://github.com/norlab-ulaval/libnabo}{libnabo} does not
   have a signalling value to identify indices for invalid query points (e.g. 
   those containing an \code{NA}). In this situation, the index returned by 
   libnabo will be 0 and \code{knn} will therefore return an index of 1. 

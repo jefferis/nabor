@@ -52,7 +52,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 /*!
 \mainpage libnabo
 
-from http://github.com/ethz-asl/libnabo by Stéphane Magnenat (http://stephane.magnenat.net),
+from https://github.com/norlab-ulaval/libnabo by Stéphane Magnenat (https://stephane.magnenat.net),
 ASL-ETHZ, Switzerland (http://www.asl.ethz.ch)
 
 libnabo is a fast K Nearest Neighbour library for low-dimensional spaces.
@@ -160,7 +160,7 @@ If you use libnabo in the academic context, please cite this paper that evaluate
 
 \section BugReporting Bug reporting
 
-Please use <a href="http://github.com/ethz-asl/libnabo/issues">github's issue tracker</a> to report bugs.
+Please use <a href="https://github.com/norlab-ulaval/libnabo/issues">github's issue tracker</a> to report bugs.
 
 \section License
 
@@ -197,7 +197,7 @@ libnabo differs from \ref ANN on the following points:
 \section References
 
 \li \anchor Eigen Eigen: http://eigen.tuxfamily.org
-\li \anchor ANN ANN: http://www.cs.umd.edu/~mount/ANN
+\li \anchor ANN ANN: https://www.cs.umd.edu/~mount/ANN/
 \li \anchor CMake CMake: http://www.cmake.org
 \li \anchor Boost Boost: http://www.boost.org
 

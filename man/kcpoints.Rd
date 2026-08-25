@@ -6,8 +6,8 @@
 \title{List of 3 matrices containing 3D points from Drosophila neurons}
 \description{
 This R list contains 3 skeletonized \emph{Drosophila} Kenyon cells as
-\code{dotprops} objects. Original data is due to Chiang et al. 2011, who have
-generously shared their raw data at \url{http://flycircuit.tw}. Image
+\code{dotprops} objects. Original data is due to Chiang et al. 2011 and was
+shared through the FlyCircuit project. Image
 registration and further processing was carried out by Greg Jefferis.
 }
 \references{
