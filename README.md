@@ -1,17 +1,17 @@
 # nabor
 <!-- badges: start -->
-[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.github.io)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/nabor)](https://cran.r-project.org/package=nabor) 
+[![natverse](https://img.shields.io/badge/natverse-Part%20of%20the%20natverse-a241b6)](https://natverse.org/)
+[![CRAN status](https://www.r-pkg.org/badges/version/nabor)](https://cran.r-project.org/package=nabor)
 [![DOI](https://zenodo.org/badge/23437339.svg)](https://zenodo.org/badge/latestdoi/23437339)
-[![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest) 
-[![Build Status](https://travis-ci.org/jefferis/nabor.svg)](https://travis-ci.org/jefferis/nabor)
-[![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://jefferis.github.io/nabor/reference/)
-[![Downloads](http://cranlogs.r-pkg.org/badges/nabor?color=brightgreen)](http://www.r-pkg.org/pkg/nabor)
+[![Release Version](https://img.shields.io/github/release/jefferis/nabor.svg)](https://github.com/jefferis/nabor/releases/latest)
+[![R-CMD-check](https://github.com/jefferis/nabor/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/jefferis/nabor/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/jefferis/nabor/branch/master/graph/badge.svg)](https://app.codecov.io/gh/jefferis/nabor)
+[![Downloads](https://cranlogs.r-pkg.org/badges/nabor?color=brightgreen)](https://cran.r-project.org/package=nabor)
 <!-- badges: end -->
 
-R package **nabor** wraps [libnabo](https://github.com/ethz-asl/libnabo), 
+R package **nabor** wraps [libnabo](https://github.com/norlab-ulaval/libnabo),
 a fast K Nearest Neighbour library for low-dimensional spaces implemented in templated C++.
-In comparison with the widely used [ANN](http://www.cs.umd.edu/~mount/ANN) library (wrapped by the
+In comparison with the widely used [ANN](https://www.cs.umd.edu/~mount/ANN/) library (wrapped by the
 [RANN](https://cran.r-project.org/package=RANN) R package), **libnabo** is reported
 to be 5% to 20% faster with more compact data structures.
 

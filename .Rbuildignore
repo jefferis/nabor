@@ -1,6 +1,5 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^\.travis\.yml$
 ^.*\.bib$
 ^cran-comments\.md$
 ^revdep$
