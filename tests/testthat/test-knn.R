@@ -47,3 +47,12 @@ test_that("nn2 with bad data", {
   m=matrix(NA_real_, ncol=2, nrow=3)
   expect_is(knn(m, m, k=1), 'list')
 })
+
+test_that("knn validates arguments", {
+  m=matrix(as.numeric(1:24), ncol=3)
+  expect_error(knn(m, k=1, searchtype=c("brute","kd_tree_heap")),
+               "only 1 searchtype")
+  expect_error(knn(m, k=1, searchtype="nonsense"), "Invalid search type")
+  expect_error(knn(m, k=1, searchtype=5L), "Unknown search type")
+  expect_error(knn(m, k=1, radius=-1), "radius must be")
+})
