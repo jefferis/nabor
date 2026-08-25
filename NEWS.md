@@ -1,6 +1,9 @@
 # nabor 0.5.1
 
 * pkgdown docs and other doc tweaks
+* Add `Authors@R` metadata requested by CRAN.
+* Update moved URLs and remove a dead FlyCircuit link.
+* Replace Travis CI with GitHub Actions checks, coverage, and a pkgdown site.
 
 # nabor 0.5.0
 
